@@ -17,7 +17,7 @@ Random Attack
 """
 Preset
 """
-"""
+
 AI_country1 = country(0)
 AI_country1.add_troop(10, 'Rangers')
 AI_country2 = country(1)
@@ -25,28 +25,24 @@ AI_country2.add_troop(10, 'Swordsman')
 
 Player = player_country( 2, 'Kindom')
 Player.add_troop(10,'Rangers')
+Player.add_troop(15,'Swordsman')
 Player.show_troop()
-
+print(str(Player.getSoldiersNum()))
+"""
 Player.attack_countries(AI_country1)
 rangerA = Troop.Rangers()
 print(str(rangerA.health))
 """
+"""
+shop = Map.MainShop('Big shop')
+main_map = Map.map()
 
+shop.showShop(Player)
+shop = Map.MainShop('Big shop')
+"""
 
+Map.myshop.showShop(Player)
 
-answer = None
-
-def check():
-    time.sleep(2)
-    if answer != None:
-        return
-    print ("Too Slow")
-
-Thread(target = check).start()
-
-answer = input("Input something: ")
-hil = Map.Hi("oh")
-hil.showShop()
 
 
 
