@@ -13,7 +13,7 @@ f=2
 if f == 1: r="green"
 else:r="red"
 
-class Map:
+class map:
     def __int__(self, name):
         self.name=name
 
@@ -39,21 +39,18 @@ class Map:
         root.mainloop()
 
 class MainShop:
-    gold=500
-    level=5
-    maxNum = 5
     howTroops = 0
     timesBought = 0
     def __init__(self,name):
         self.name = name
         self.canva = None
-    def showShop(self):
+    def showShop(self, player_country):
 
         def buyArcher():
             if checkLevel(1) == True:
                 if checkCap():
                     if checkBal(10) == True:
-                        MainShop.gold = int(MainShop.gold) - 10
+                        player_country.num_gold = int(player_country.num_gold) - 10
                         MainShop.howTroops += 1
                         updateScreen(self.canva)
 
@@ -61,7 +58,7 @@ class MainShop:
             if checkLevel(1) == True:
                 if checkCap() == True:
                     if checkBal(15)== True:
-                        MainShop.gold = int(MainShop.gold) - 15
+                        player_country.num_gold = int(player_country.num_gold) - 15
                         MainShop.howTroops += 1
                         updateScreen(self.canva)
 
@@ -69,7 +66,7 @@ class MainShop:
             if checkLevel(2) == True:
                 if checkCap()==True:
                     if checkBal(30)== True:
-                        MainShop.gold = int(MainShop.gold) - 30
+                        player_country.num_gold = int(player_country.num_gold) - 30
                         MainShop.howTroops += 1
                         updateScreen(self.canva)
 
@@ -77,7 +74,7 @@ class MainShop:
             if checkLevel(2) == True:
                 if checkCap()==True:
                     if checkBal(20)== True:
-                        MainShop.gold = int(MainShop.gold) - 20
+                        player_country.num_gold = int(player_country.num_gold) - 20
                         MainShop.howTroops += 1
                         updateScreen(self.canva)
 
@@ -85,7 +82,7 @@ class MainShop:
             if checkLevel(3) == True:
                 if checkCap() == True:
                     if checkBal(30) == True:
-                        MainShop.gold = int(MainShop.gold) - 30
+                        player_country.num_gold = int(player_country.num_gold) - 30
                         MainShop.howTroops += 1
                         updateScreen(self.canva)
 
@@ -93,7 +90,7 @@ class MainShop:
             if checkLevel(3) == True:
                 if checkCap() == True:
                     if checkBal(40) == True:
-                        MainShop.gold = int(MainShop.gold) - 40
+                        player_country.num_gold = int(player_country.num_gold) - 40
                         MainShop.howTroops += 1
                         updateScreen(self.canva)
 
@@ -101,7 +98,7 @@ class MainShop:
             if checkLevel(4) == True:
                 if checkCap() == True:
                     if checkBal(50) == True:
-                        MainShop.gold = int(MainShop.gold) - 50
+                        player_country.num_gold = int(player_country.num_gold) - 50
                         MainShop.howTroops += 1
                         updateScreen(self.canva)
 
@@ -109,47 +106,47 @@ class MainShop:
             if checkLevel(5) == True:
                 if checkCap() == True:
                     if checkBal(70) == True:
-                        MainShop.gold = int(MainShop.gold) - 70
+                        player_country.num_gold = int(player_country.num_gold) - 70
                         MainShop.howTroops += 1
                         updateScreen(self.canva)
 
         def checkCap():
-            if MainShop.maxNum > MainShop.howTroops:
+            if player_country.max_troop > MainShop.howTroops:
                 return True
-            else:alert_popup("Uh Oh", "You don't have enough housing space!", "You currently can only hold "+ str(MainShop.maxNum)+ " soldiers.")
+            else:alert_popup("Uh Oh", "You don't have enough housing space!", "You currently can only hold "+ str(player_country.max_troop)+ " soldiers.")
 
         def checkLevel(needed):
-            if MainShop.level >= needed:
+            if player_country.level >= needed:
                 return True
             else:alert_popup("Uh Oh", "You are not high enough level!", "You need to be level " + str(needed) + " to purchase this.")
 
         def checkBal(cost):
-            if MainShop.gold>=cost:return True
+            if player_country.num_gold>=cost:return True
             else: alert_popup("Uh Oh!","You do not have enough gold",":(")
 
         def increaseMax():
             if MainShop.timesBought == 0:
                 if checkBal(25) ==  True:
-                    MainShop.maxNum += 3
-                    MainShop.gold = int(MainShop.gold) - 25
+                    player_country.max_troop += 3
+                    player_country.num_gold = int(player_country.num_gold) - 25
                     updateScreen(self.canva)
                     updateUpgrade(self.canva)
                     MainShop.timesBought += 1
             elif MainShop.timesBought == 1:
                 if checkLevel(3) == True:
                     if checkBal(50) ==  True:
-                        MainShop.maxNum += 4
+                        player_country.max_troop += 4
                         updateScreen(self.canva)
-                        MainShop.gold = int(MainShop.gold) - 50
+                        player_country.num_gold = int(player_country.num_gold) - 50
                         updateScreen(self.canva)
                         updateUpgrade(self.canva)
                         MainShop.timesBought += 1
             elif MainShop.timesBought == 2:
                 if checkLevel(5) == True:
                     if checkBal(120) ==  True:
-                        MainShop.maxNum += 8
+                        player_country.max_troop += 8
                         updateScreen(self.canva)
-                        MainShop.gold = int(MainShop.gold) - 120
+                        player_country.num_gold = int(player_country.num_gold) - 120
                         updateScreen(self.canva)
                         updateUpgrade(self.canva)
                         MainShop.timesBought += 1
@@ -196,20 +193,18 @@ class MainShop:
             self.name = name
             self.name.after(200,changeText())
 
-        def changeToMShop():
-            MainShop.showMShop()
 
         def delete(name:Canvas):
             name.destroy()
 
         def quit():
             delete(self.canva)
-            shopp.showMShop()
+            myshop.showMShop(player_country)
 
 
 
         def changeText():
-            label = Label(text=MainShop.gold, width=10)
+            label = Label(text=player_country.num_gold, width=10)
             label.configure(width=10, activebackground="brown", relief=FLAT)
             label_window = self.canva.create_window(700, 10, anchor=NW, window=label)
 
@@ -293,19 +288,19 @@ class MainShop:
 
 
 
-        label = Label(text="Gold:" + str(MainShop.gold), width=10)
+        label = Label(text="Gold:" + str(player_country.num_gold), width=10)
         label.configure(width=10, activebackground="brown", relief=FLAT)
         label_window = self.canva.create_window(660, 10, anchor=NW, window=label)
         self.canva.pack()
         root.mainloop()
 
-    def showMShop(self):
+    def showMShop(self, player_country):
 
         def buyEle():
             if checkLevel(1) == True:
                 if checkCap()==True:
                     if checkBal(40)== True:
-                        MainShop.gold = int(MainShop.gold) - 40
+                        player_country.num_gold = int(player_country.num_gold) - 40
                         MainShop.howTroops += 1
                         updateScreen(self.canva)
 
@@ -313,22 +308,22 @@ class MainShop:
             if checkLevel(2) == True:
                 if checkCap()==True:
                     if checkBal(20)== True:
-                        MainShop.gold = int(MainShop.gold) - 20
+                        player_country.num_gold = int(player_country.num_gold) - 20
                         MainShop.howTroops += 1
                         updateScreen(self.canva)
 
         def checkCap():
-            if MainShop.maxNum > MainShop.howTroops:
+            if player_country.max_troop > MainShop.howTroops:
                 return True
-            else:alert_popup("Uh Oh", "You don't have enough housing space!", "You currently can only hold "+ str(MainShop.maxNum)+ " soldiers.")
+            else:alert_popup("Uh Oh", "You don't have enough housing space!", "You currently can only hold "+ str(player_country.max_troop)+ " soldiers.")
 
         def checkLevel(needed):
-            if MainShop.level >= needed:
+            if player_country.level >= needed:
                 return True
             else:alert_popup("Uh Oh", "You are not high enough level!", "You need to be level " + str(needed) + " to purchase this.")
 
         def checkBal(cost):
-            if MainShop.gold>=cost:return True
+            if player_country.num_gold>=cost:return True
             else: alert_popup("Uh Oh!","You do not have enough gold",":(")
 
         def alert_popup(title, message, path):
@@ -356,12 +351,12 @@ class MainShop:
             self.name.after(200,changeText())
 
         def changeText():
-            label = Label(text=MainShop.gold, width=10)
+            label = Label(text=player_country.num_gold, width=10)
             label.configure(width=10, activebackground="brown", relief=FLAT)
             label_window = self.canva.create_window(700, 10, anchor=NW, window=label)
 
         self.canva = Canvas(root, width="750", height="750", bg="brown")
-        labell = Label(text="Gold:" + str(MainShop.gold), width=10)
+        labell = Label(text="Gold:" + str(player_country.num_gold), width=10)
         labell.configure(width=10, activebackground="brown", relief=FLAT)
         labell_window = self.canva.create_window(660, 10, anchor=NW, window=labell)
 
@@ -410,5 +405,4 @@ class MainShop:
         root.mainloop()
 
 
-shopp = MainShop("oh")
-shopp.showShop()
+myshop = MainShop('shop')
