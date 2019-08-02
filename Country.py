@@ -4,9 +4,12 @@ class country:
     def __init__(self, ID,name = ''):
         self.name = name
         self.ID = ID
-        self.troop_list = {'Rangers': [0,Troop.Rangers()], 'Swordsman': [0, Troop.Swordsman()]}
+        self.level = 1
+        self.troop_list = {'Rangers': [0,Troop.Rangers()], 'Swordsman': [0, Troop.Swordsman()], 'Priest': [0,Troop.Priest],
+                           'Spearman': [0,Troop.Spearman], 'CalvaryRaider': [0,Troop.Spearman], 'BlackSmith': [0,Troop.BlackSmith],
+                           'Ballista': [0,Troop.Ballsita], 'Dragon': [0, Troop.Dragon]}
         self.max_troop = 5
-        self.num_gold = 0
+        self.num_gold = 400
         self.gold_per_day = 10
         self.adjacent_countries = []
         # Technology Tree
@@ -21,24 +24,23 @@ class country:
         self.times = 1
 
     def add_troop(self, num, type):
-        if type == "Rangers":
-            soldier = self.troop_list['Rangers']
-            for _ in range(num):
-                soldier[0] += 1
-        if type == "Swordsman":
-            soldier = self.troop_list['Swordsman']
-            for _ in range(num):
-                soldier[0] += 1
+        for key in self.troop_list:
+            if type == key:
+                self.troop_list[key][0] += num
 
     def show_troop(self):
-        troop  = self.troop_list['Rangers']
-        print("Rangers: " + str(troop[0]))
-        troop  = self.troop_list['Swordsman']
-        print("Swordsman: " + str(troop[0]))
+        for key in self.troop_list:
+            print( key + ": " + str(self.troop_list[key][0]))
 
     def add_road(self, another_country):
         self.adjacent_countries.append(another_country)
         another_country.adjcacent_countris.append(another_country)
+
+    def getSoldiersNum(self):
+        total = 0
+        for key in self.troop_list:
+            total += self.troop_list[key][0]
+        return total
 
 
 
