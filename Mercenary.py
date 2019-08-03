@@ -17,13 +17,10 @@ class WarElephant(Troop):
     def isMercenary(self):
         return True
 class Merchant():
+    currentCountry = random.sample(country.countryList, 1)
+    mercenaryList = [CrossbowMan(), WarElephant()]
     def __init__(self):
-        Merchant.currentCountry = random.sample(country.countryList,1)
-        Merchant.mercenaryList = [CrossbowMan(),WarElephant()]
-        '''
-        must assign its value to a variable when using it
-        '''
-        Merchant.moveAround()
+        pass
     def moveAround(self):
         if Time.setTimeDays(2):
             Merchant.currentCountry = random.sample(Merchant.currentCountry.adjacent_countries(),1)
