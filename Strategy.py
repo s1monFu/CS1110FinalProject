@@ -7,20 +7,24 @@ class strategy:
                                 "engaging close range combat with the defender",
                              4: "Penetration – A direct attack through enemy lines, then an attack on the rear once through"}
 
-    def strategy_counter(self,user_choice):
-        AI_choice = random.randint(1,5)
-        if user_choice == 1 and AI_choice == 2:
-            print("\n>>>\tYou chose " + self.strategy_dic[1])
-            return 50
-        if user_choice == 2 and AI_choice == 3:
-            return 50
-        if user_choice == 3 and AI_choice == 4:
-            return 50
-        if user_choice == 4 and AI_choice == 1:
-            return 50
-        return -50
+    def aggressive(self, my_country):
+        my_total = 0
+        for key in my_country.troop_list:
+            if key == 'Dragon' or 'Swordsman' or 'CalvaryRaider':
+                my_total += my_country.troop_list[key][0]
+        return my_total
 
-    def show_all_strategies(self):
-        for _ in range(1,5):
-            print("\n>>>\tChoice " + str(_) + " is: " + self.strategy_dic[_])
+    def neutral(self, my_country):
+        my_total = 0
+        for key in my_country.troop_list:
+            if key == 'Priest' or 'BlackSmith':
+                my_total += my_country.troop_list[key][0]
+        return my_total
+
+    def defensive(self, my_country):
+        my_total = 0
+        for key in my_country.troop_list:
+            if key == 'Spearman' or 'Ballista' or 'Ranger':
+                my_total += my_country.troop_list[key][0]
+        return my_total
 
