@@ -510,8 +510,7 @@ class MainShop:
         MainShop.delete(self.canva)
         myshop.mainScreen(self)
 
-    def showBScreen(self):
-
+    def showBScreen(self, my_country, other_country):
         roundnum = 0
 
         canva = Canvas(root, width="750", height="750", bg="blue")
@@ -524,11 +523,11 @@ class MainShop:
         label22.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
         label22_window = canva.create_window(550, 10, anchor=NW, window=label22)
 
-        label222 = Label(text=str(Country.country.get_total_cp()), width=40)
+        label222 = Label(text=str(my_country.get_total_cp(my_country.troop_list, other_country)), width=40)
         label222.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
         label222_window = canva.create_window(10, 150, anchor=NW, window=label222)
 
-        label2233 = Label(text="Enemy Power", width=40)
+        label2233 = Label(text=str(other_country.get_total_cp(other_country.troop_list, my_country)), width=40)
         label2233.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
         label2233_window = canva.create_window(550, 150, anchor=NW, window=label2233)
 
