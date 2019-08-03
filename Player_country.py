@@ -12,32 +12,53 @@ class player_country(country):
             A country wins by having more points than others
             Points come from the number of troops, their health and attack, and your strategy"""
         print("\n>>>\tEncounter enemy!")
-        my_point = 0
-        enemy_point = 0
-        # My point
-        ranger = self.troop_list['Rangers']
-        my_point += ranger[0] * ranger[1].getPoint()
-        swordsman = self.troop_list['Swordsman']
-        my_point += swordsman[0] * swordsman[1].getPoint()
-        # AI point
-        ranger = other_country.troop_list['Rangers']
-        enemy_point += ranger[0] * ranger[1].getPoint()
-        swordsman = other_country.troop_list['Swordsman']
-        enemy_point += swordsman[0] * swordsman[1].getPoint()
+        my_point = self.get_total_cp(self.troop_list, other_country)
+        enemy_point = other_country.get_total_cp(other_country.troop_list, self)
+        if my_point <= 0:
+            return False
+        elif enemy_point <= 0:
+            return True
+        if my_point > enemy_point:
+            for key in self.troop_list:
+                if self.troop_list[key][0] > 0:
+                    if self.troop_list[key][0] >= 2:
+                        self.troop_list[key][0] -= 2
+                    if self.troop_list[key][1].health > 10:
+                        self.troop_list[key][1].health -= 10
+                    if self.troop_list[key][1].attack >= 5:
+                        self.troop_list[key][1].attack -= 5
+            for key in other_country.troop_list:
+                if other_country.troop_list[key][0] > 0:
+                    if other_country.troop_list[key][0] >= 3:
+                        other_country.troop_list[key][0] -= 3
+                    if other_country.troop_list[key][1].health > 15:
+                        other_country.troop_list[key][1].health -= 15
+                    if other_country.troop_list[key][1].attack >=10:
+                        other_country.troop_list[key][1].attack -= 10
+        if enemy_point > my_point:
+            for key in self.troop_list:
+                if self.troop_list[key][0] > 0:
+                    if self.troop_list[key][0] >= 3:
+                        self.troop_list[key][0] -= 3
+                    if self.troop_list[key][1].health > 15:
+                        self.troop_list[key][1].health -= 15
+                    if self.troop_list[key][1].attack >= 10:
+                        self.troop_list[key][1].attack -= 10
+            for key in other_country.troop_list:
+                if other_country.troop_list[key][0] > 0:
+                    if other_country.troop_list[key][0] >= 2:
+                        other_country.troop_list[key][0] -= 2
+                    if other_country.troop_list[key][1].health > 10:
+                        other_country.troop_list[key][1].health -= 10
+                    if other_country.troop_list[key][1].attack >= 5:
+                        other_country.troop_list[key][1].attack -= 5
+        self.attack_countries(self, other_country)
 
-        print("\n>>>\tPlease enter your choice")
-        choice = int(input())
-        my_point += self.choose_strategy(choice)
-        print("\n>>>\tMy Point:" + str(my_point))
-        print("\n>>>\tEnemy Point:" + str(enemy_point))
 
-        # Compare the points
-        if my_point >= enemy_point:
-            print("\n>>>\tCongrats! You won the battle")
-        elif my_point < enemy_point:
-            print("\n>>>\tThe enemy wins!")
-    def choose_strategy(self, choice):
-        return self.my_strategy.strategy_counter(choice)
+
+    #def after_attack(self):
+    #    if self.troop_list['Priest'][0] > 0:
+
 
     def technologyTree(self):
         while True:
