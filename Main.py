@@ -24,7 +24,7 @@ AI_country2 = country(1)
 AI_country2.add_troop(10, 'Swordsman')
 
 Player = player_country( 2, 'Kindom')
-Player.add_troop(10,'Rangers')
+Player.add_troop(10,'Ranger')
 Player.add_troop(15,'Swordsman')
 Player.show_troop()
 print(str(Player.getSoldiersNum()))
@@ -40,9 +40,5 @@ main_map = Map.map()
 shop.showShop(Player)
 shop = Map.MainShop('Big shop')
 """
-
-Map.myshop.showShop(Player)
-
-
-
+Player.attack_countries(AI_country1)
 
