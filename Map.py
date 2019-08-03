@@ -2,7 +2,7 @@
 Map
 """
 from tkinter import *
-import time
+import Country
 day_count = 0
 root = Tk()
 x = 1
@@ -53,23 +53,7 @@ class map:
         canvas.pack()
         root.mainloop()
 
-class BattleScreen:
-    def showScreen(self, player_cpuntry):
-        canvas = Canvas(root, width="750", height="750")
-        canvas.create_rectangle(0, 0, 750, 750, fill="green")
-        label2 = Label(text="Troops", width=40)
-        label2.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
-        label2_window = canvas.create_window(250, 10, anchor=NW, window=label2)
 
-        label3 = Label(text="Upgrades", width=40)
-        label3.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
-        label3_window = canvas.create_window(260, 290, anchor=NW, window=label3)
-
-        button4 = Button(root, text="Start to attack", command=player_cpuntry.attack_countries)
-        button4.configure(width=10, activebackground="#33B5E5", relief=FLAT)
-        button4_window = canvas.create_window(10, 130, anchor=NW, window=button4)
-        canvas.pack()
-        root.mainloop()
 class MainShop:
     howTroops = 0
     timesBought = 0
@@ -242,12 +226,12 @@ class MainShop:
 
         def quit():
             delete(self.canva)
-            myshop.showMShop(player_country)
+            myshop.mainScreen()
 
         def changeText():
-            label = Label(text=player_country.num_gold, width=10)
+            label = Label(text="Gold:" + str(player_country.num_gold), width=10)
             label.configure(width=10, activebackground="brown", relief=FLAT)
-            label_window = self.canva.create_window(700, 10, anchor=NW, window=label)
+            label_window = self.canva.create_window(650, 10, anchor=NW, window=label)
 
         self.canva = Canvas(root, width="750", height="750", bg="brown")
         label2 = Label(text="Troops", width=40)
@@ -328,17 +312,14 @@ class MainShop:
         labe8.configure(width=60, activebackground="brown", relief=FLAT)
         labe8_window = self.canva.create_window(100, 320, anchor=NW, window=labe8)
 
-        button9 = Button(root, text="Merchant Shop", command=quit)
+        button9 = Button(root, text="Back", command=quit)
         button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
-        button9_window = self.canva.create_window(10, 700, anchor=NW, window=button9)
+        button9_window = self.canva.create_window(340, 700, anchor=NW, window=button9)
 
-        button9 = Button(root, text="Sleep", command=quity)
-        button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
-        button9_window = self.canva.create_window(180, 700, anchor=NW, window=button9)
 
         label = Label(text="Gold:" + str(player_country.num_gold), width=10)
         label.configure(width=10, activebackground="brown", relief=FLAT)
-        label_window = self.canva.create_window(660, 10, anchor=NW, window=label)
+        label_window = self.canva.create_window(650, 10, anchor=NW, window=label)
         self.canva.pack()
         root.mainloop()
 
@@ -475,14 +456,106 @@ class MainShop:
 
 
     def mainScreen(self):
+
+        def delete(name: Canvas):
+            name.destroy()
+
+        def quityy():
+            delete(self.canva)
+            myshop.showChooseB()
+
+        def quity():
+            delete(self.canva)
+            myshop.sleepScreen()
+
         self.canva = Canvas(root, width="750", height="750", bg="sky blue")
+
+
+        button9 = Button(root, text="Sleep", command=quity)
+        button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        button9_window = self.canva.create_window(10, 700, anchor=NW, window=button9)
+
+        button9 = Button(root, text="Battle", command=quityy)
+        button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        button9_window = self.canva.create_window(180, 700, anchor=NW, window=button9)
         self.canva.pack()
         root.mainloop()
 
+    def showChooseB(self):
+        def delete(name: Canvas):
+            name.destroy()
 
+        def quityyy():
+            delete(self.canva)
+            myshop.showBScreen()
+
+        def quityyyy():
+            delete(self.canva)
+            myshop.showBScreen()
+
+        self.canva = Canvas(root, width="750", height="750", bg="black")
+
+        button9 = Button(root, text="a", command=quityyy, font=("Courier", 25))
+        button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        button9_window = self.canva.create_window(10, 400, anchor=NW, window=button9)
+
+        button7 = Button(root, text="b", command=quityyyy, font=("Courier", 25))
+        button7.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        button7_window = self.canva.create_window(400, 400, anchor=NW, window=button7)
+
+        self.canva.pack()
+        root.mainloop()
 
     def backtomain(self):
         MainShop.delete(self.canva)
         myshop.mainScreen(self)
 
+    def showBScreen(self):
+
+        roundnum = 0
+
+        canva = Canvas(root, width="750", height="750", bg="blue")
+
+        label2 = Label(text="Our Power", width=40)
+        label2.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
+        label2_window = canva.create_window(10, 10, anchor=NW, window=label2)
+
+        label22 = Label(text="Enemy Power", width=40)
+        label22.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
+        label22_window = canva.create_window(550, 10, anchor=NW, window=label22)
+
+        label222 = Label(text=str(Country.country.get_total_cp()), width=40)
+        label222.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
+        label222_window = canva.create_window(10, 150, anchor=NW, window=label222)
+
+        label2233 = Label(text="Enemy Power", width=40)
+        label2233.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
+        label2233_window = canva.create_window(550, 150, anchor=NW, window=label2233)
+
+        label3 = Label(text="Upgrades", width=40)
+        label3.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
+        label3_window = canva.create_window(260, 290, anchor=NW, window=label3)
+
+        button4 = Button(root, text="Start to attack", font=("Courier", 25))
+        button4.configure(width=20, activebackground="#33B5E5", relief=FLAT)
+        button4_window = canva.create_window(140, 400, anchor=NW, window=button4)
+
+        button5 = Button(root, text="Aggressive", font=("Courier", 15))
+        button5.configure(width=15, activebackground="#33B5E5", relief=FLAT)
+        button5_window = canva.create_window(50, 500, anchor=NW, window=button5)
+
+        button6 = Button(root, text="Neutral", font=("Courier", 15))
+        button6.configure(width=15, activebackground="#33B5E5", relief=FLAT)
+        button6_window = canva.create_window(275, 500, anchor=NW, window=button6)
+
+        button7 = Button(root, text="Defensive", font=("Courier", 15))
+        button7.configure(width=15, activebackground="#33B5E5", relief=FLAT)
+        button7_window = canva.create_window(500, 500, anchor=NW, window=button7)
+
+        label2 = Label(text="Round Number: " + str(roundnum), width=40)
+        label2.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
+        label2_window = canva.create_window(250, 600, anchor=NW, window=label2)
+
+        canva.pack()
+        root.mainloop()
 myshop = MainShop('shop')
