@@ -53,7 +53,23 @@ class map:
         canvas.pack()
         root.mainloop()
 
+class BattleScreen:
+    def showScreen(self, player_cpuntry):
+        canvas = Canvas(root, width="750", height="750")
+        canvas.create_rectangle(0, 0, 750, 750, fill="green")
+        label2 = Label(text="Troops", width=40)
+        label2.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
+        label2_window = canvas.create_window(250, 10, anchor=NW, window=label2)
 
+        label3 = Label(text="Upgrades", width=40)
+        label3.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
+        label3_window = canvas.create_window(260, 290, anchor=NW, window=label3)
+
+        button4 = Button(root, text="Start to attack", command=player_cpuntry.attack_countries)
+        button4.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        button4_window = canvas.create_window(10, 130, anchor=NW, window=button4)
+        canvas.pack()
+        root.mainloop()
 class MainShop:
     howTroops = 0
     timesBought = 0
