@@ -517,11 +517,11 @@ class MainShop:
 
         self.canva = Canvas(root, width="750", height="750", bg="black")
 
-        button9 = Button(root, text="Country A", command=countryA, font=("Courier", 25))
+        button9 = Button(root, text="Kingdom Ketafa", command=countryA, font=("Courier", 25))
         button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
         button9_window = self.canva.create_window(10, 400, anchor=NW, window=button9)
 
-        button7 = Button(root, text="Country B", command=countryB, font=("Courier", 25))
+        button7 = Button(root, text="Ezstabian Empire", command=countryB, font=("Courier", 25))
         button7.configure(width=10, activebackground="#33B5E5", relief=FLAT)
         button7_window = self.canva.create_window(400, 400, anchor=NW, window=button7)
 
@@ -549,19 +549,24 @@ class MainShop:
         self.name.after(200, self.changeTextPowerStratN(thecountry))
 
     def changeTextPowerStratN(self, thecountry):
-        label222 = Label(text=str(int(Player.get_total_cp(Player.troop_list, thecountry))+int(Strategy.neutral(Player))), width=40)
+        label222 = Label(
+            text=str(int(Player.get_total_cp(Player.troop_list, thecountry)) + int(Strategy.neutral(Player))), width=40)
         label222.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
                            fg="white")
         label222_window = self.canva.create_window(10, 150, anchor=NW, window=label222)
 
     def changeTextPowerStratD(self, thecountry):
-        label222 = Label(text=str(int(Player.get_total_cp(Player.troop_list, thecountry))+int(Strategy.defensive(Player))), width=40)
+        label222 = Label(
+            text=str(int(Player.get_total_cp(Player.troop_list, thecountry)) + int(Strategy.defensive(Player))),
+            width=40)
         label222.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
                            fg="white")
         label222_window = self.canva.create_window(10, 150, anchor=NW, window=label222)
 
     def changeTextPowerStratA(self, thecountry):
-        label222 = Label(text=str(int(Player.get_total_cp(Player.troop_list, thecountry))+int(Strategy.aggressive(Player))), width=40)
+        label222 = Label(
+            text=str(int(Player.get_total_cp(Player.troop_list, thecountry)) + int(Strategy.aggressive(Player))),
+            width=40)
         label222.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
                            fg="white")
         label222_window = self.canva.create_window(10, 150, anchor=NW, window=label222)
@@ -585,6 +590,13 @@ class MainShop:
         label2_window = self.canva.create_window(250, 600, anchor=NW, window=label2)
 
     def showBScreen(self, country):
+
+        def delete(name: Canvas):
+            name.destroy()
+
+        def backtomain():
+            delete(self.canva)
+            myshop.mainScreen()
 
         self.roundnum = 0
 
@@ -617,23 +629,30 @@ class MainShop:
         button4_window = self.canva.create_window(140, 400, anchor=NW, window=button4)
 
         button5 = Button(root, text="Aggressive", command=lambda: [Strategy.aggressive(Player),
-                                                                   self.updatePowerS(self.canva, country)], font=("Courier", 15))
+                                                                   self.updatePowerS(self.canva, country)],
+                         font=("Courier", 15))
         button5.configure(width=15, activebackground="#33B5E5", relief=FLAT)
         button5_window = self.canva.create_window(50, 500, anchor=NW, window=button5)
 
         button6 = Button(root, text="Neutral", command=lambda: [Strategy.neutral(Player),
-                                                                   self.updatePowerN(self.canva, country)], font=("Courier", 15))
+                                                                self.updatePowerN(self.canva, country)],
+                         font=("Courier", 15))
         button6.configure(width=15, activebackground="#33B5E5", relief=FLAT)
         button6_window = self.canva.create_window(275, 500, anchor=NW, window=button6)
 
         button7 = Button(root, text="Defensive", command=lambda: [Strategy.defensive(Player),
-                                                                   self.updatePowerDefensive(self.canva, country)], font=("Courier", 15))
+                                                                  self.updatePowerDefensive(self.canva, country)],
+                         font=("Courier", 15))
         button7.configure(width=15, activebackground="#33B5E5", relief=FLAT)
         button7_window = self.canva.create_window(500, 500, anchor=NW, window=button7)
 
         label2 = Label(text="Round Number: " + str(self.roundnum), width=40)
         label2.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
         label2_window = self.canva.create_window(250, 600, anchor=NW, window=label2)
+
+        buttonquit = Button(root, text="Quit", command=backtomain)
+        buttonquit.configure(width=10, activebackground="brown", relief=FLAT)
+        buttonquit_window = self.canva.create_window(310, 700, anchor=NW, window=buttonquit)
 
         self.canva.pack()
         root.mainloop()
