@@ -1,3 +1,105 @@
+    def showMShop(self, Player):
+
+        def buyEle():
+            if checkLevel(1) == True:
+                if checkCap() == True:
+                    if checkBal(40) == True:
+                        if Merchant.inPlayerCountry:
+                            Player.num_gold = int(Player.num_gold) - 20
+                            Player.troop_list['WarElephant'][0] += 1
+                            MainShop.howTroops += 1
+                            updateScreen(self.canva)
+                        else:
+                            showShop.alert_popup("","You can only buy mercenary when merchant is traveling to your country","")
+
+        def buyCross():
+            if checkLevel(2) == True:
+                if checkCap() == True:
+                    if checkBal(20) == True:
+                        if Merchant.inPlayerCountry:
+                            Player.num_gold = int(Player.num_gold) - 40
+                            Player.troop_list['CrossbowMan'][0] += 1
+                            MainShop.howTroops += 1
+                            updateScreen(self.canva)
+                        else:
+                            alert_popup("","You can only buy mercenary when merchant is traveling to your country","")
+
+        def checkCap():
+            if Player.max_troop > MainShop.howTroops:
+                return True
+            else:
+                alert_popup("Uh Oh", "You don't have enough housing space!",
+                            "You currently can only hold " + str(Player.max_troop) + " soldiers.")
+
+        def checkLevel(needed):
+            if Player.level >= needed:
+                return True
+            else:
+                alert_popup("Uh Oh", "You are not high enough level!",
+                            "You need to be level " + str(needed) + " to purchase this.")
+
+        def checkBal(cost):
+            if Player.num_gold >= cost:
+                return True
+            else:
+                alert_popup("Uh Oh!", "You do not have enough gold", ":(")
+
+        def alert_popup(title, message, path):
+            """Generate a pop-up window for special messages."""
+            root = Tk()
+            root.title(title)
+            w = 400  # popup window width
+            h = 200  # popup window height
+            sw = root.winfo_screenwidth()
+            sh = root.winfo_screenheight()
+            x = (sw - w) / 2
+            y = (sh - h) / 2
+            root.geometry('%dx%d+%d+%d' % (w, h, x, y))
+            m = message
+            m += '\n'
+            m += path
+            w = Label(root, text=m, width=120, height=10)
+            w.pack()
+            b = Button(root, text="OK", command=root.destroy, width=10)
+            b.pack()
+            mainloop()
+
+        def updateScreen(name: Canvas):
+            self.name = name
+            self.name.after(200, changeText())
+
+        def changeText():
+            label = Label(text=Player.num_gold, width=10)
+            label.configure(width=10, activebackground="brown", relief=FLAT)
+            label_window = self.canva.create_window(700, 10, anchor=NW, window=label)
+
+        self.canva = Canvas(root, width="750", height="750", bg="brown")
+        labell = Label(text="Gold:" + str(Player.num_gold), width=10)
+        labell.configure(width=10, activebackground="brown", relief=FLAT)
+        labell_window = self.canva.create_window(660, 10, anchor=NW, window=labell)
+
+        buttony2 = Button(root, text="Crossbowman", command=buyCross)
+        buttony2.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        buttony2_window = self.canva.create_window(10, 40, anchor=NW, window=buttony2)
+        labey2 = Label(text="Cost: 20 Gold. An expert marksman, he has 20 health, and only 40 attack", width=10,
+                       anchor="w")
+        labey2.configure(width=60, activebackground="brown", relief=FLAT)
+        labey2_window = self.canva.create_window(100, 40, anchor=NW, window=labey2)
+
+        buttony3 = Button(root, text="War Elephant", command=buyEle)
+        buttony3.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        buttony3_window = self.canva.create_window(10, 70, anchor=NW, window=buttony3)
+        labey3 = Label(text="Cost: 40 Gold. A walking tank, he has 75 health, and only 35 attack", width=10,
+                       anchor="w")
+        labey3.configure(width=60, activebackground="brown", relief=FLAT)
+        labey3_window = self.canva.create_window(100, 70, anchor=NW, window=labey3)
+
+        label2 = Label(text="Merchant Shop", width=40)
+        label2.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
+        label2_window = self.canva.create_window(250, 10, anchor=NW, window=label2)
+
+        self.canva.pack()
+        root.mainloop()
 """
 Map
 """
