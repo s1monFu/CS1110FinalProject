@@ -1,106 +1,13 @@
 """
 Map
 """
-
-        def defeat(country):
-            if Player.get_total_cp(Player.troop_list, country) == 0:
-                alert_popup('Battle result', 'You lose', 'Back to Main Scree')
-
-            elif country.get_total_cp(country.troop_list, Player) == 0:
-                alert_popup('Battle result', 'You win', 'Back to Main Scree')
-                
-"""
-    def attack_countries(self, other_country):
-        """This function is used to attack other countries
-            A country wins by having more points than others
-            Points come from the number of troops, their health and attack, and your strategy"""
-        print("\n>>>\tEncounter enemy!")
-        my_point = self.get_total_cp(self.troop_list, other_country)
-        enemy_point = other_country.get_total_cp(other_country.troop_list, self)
-        if my_point <= 0:
-            return False
-        elif enemy_point <= 0:
-            return True
-        if my_point > enemy_point:
-            for key in self.troop_list:
-                if self.troop_list[key][0] > 0:
-                    if self.troop_list[key][0] >= 2:
-                        self.troop_list[key][0] -= 2
-                    else:
-                        self.troop_list[key][0] = 0
-                    if self.troop_list[key][1].health > 10:
-                        self.troop_list[key][1].health -= 10
-                    else:
-                        self.troop_list[key][1].health = 0
-                    if self.troop_list[key][1].attack >= 5:
-                        self.troop_list[key][1].attack -= 5
-                    else:
-                        self.troop_list[key][1].attack = 0
-            for key in other_country.troop_list:
-                if other_country.troop_list[key][0] > 0:
-                    if other_country.troop_list[key][0] >= 5:
-                        other_country.troop_list[key][0] -= 5
-                    else:
-                        other_country.troop_list[key][0] = 0
-                    if other_country.troop_list[key][1].health > 15:
-                        other_country.troop_list[key][1].health -= 15
-                    else:
-                        other_country.troop_list[key][1].health = 0
-                    if other_country.troop_list[key][1].attack >=10:
-                        other_country.troop_list[key][1].attack -= 10
-                    else:
-                        other_country.troop_list[key][1].attack = 0
-        if enemy_point >= my_point:
-            for key in self.troop_list:
-                if self.troop_list[key][0] > 0:
-                    if self.troop_list[key][0] >= 5:
-                        self.troop_list[key][0] -= 5
-                    else:
-                        self.troop_list[key][0] = 0
-                    if self.troop_list[key][1].health > 15:
-                        self.troop_list[key][1].health -= 15
-                    else:
-                        self.troop_list[key][1].health = 0
-                    if self.troop_list[key][1].attack >= 10:
-                        self.troop_list[key][1].attack -= 10
-                    else:
-                        self.troop_list[key][1].attack = 0
-            for key in other_country.troop_list:
-                if other_country.troop_list[key][0] > 0:
-                    if other_country.troop_list[key][0] >= 2:
-                        other_country.troop_list[key][0] -= 2
-                    else:
-                        other_country.troop_list[key][0] = 0
-                    if other_country.troop_list[key][1].health > 10:
-                        other_country.troop_list[key][1].health -= 10
-                    else:
-                        other_country.troop_list[key][1].health = 0
-                    if other_country.troop_list[key][1].attack >=5:
-                        other_country.troop_list[key][1].attack -= 5
-                    else:
-                        other_country.troop_list[key][1].attack = 0
-"""
 from tkinter import *
+import random
 from Player_country import player_country
 import AI_country
 import Strategy
 
 root = Tk()
-x = 1
-if x == 1:
-    z = "green"
-else:
-    z = "red"
-c = 2
-if c == 1:
-    p = "green"
-else:
-    p = "red"
-f = 2
-if f == 1:
-    r = "green"
-else:
-    r = "red"
 
 Player = player_country(2, 'Kindom')
 
@@ -109,6 +16,22 @@ class MainShop:
     howTroops = 0
     timesBought = 0
     day_count = 0
+
+    x = 1
+    if x == 1:
+        z = "green"
+    else:
+        z = "red"
+    c = 2
+    if c == 1:
+        p = "green"
+    else:
+        p = "red"
+    f = 2
+    if f == 1:
+        r = "green"
+    else:
+        r = "red"
 
     def __init__(self, name):
         self.name = name
@@ -489,7 +412,7 @@ class MainShop:
                                   240, 569, 250, 569, 300, 560, 320, 560, 420, 575, 460, 650, 470, 660, 480, 665, 540,
                                   650,
                                   570, 640, 580, 630, 585, 620, 587, 610, 590, 600, 585, 500
-                                  , fill=z, outline="black")
+                                  , fill=MainShop.z, outline="black")
         self.canva.create_polygon(585, 500, 500, 500, 485, 480, 475, 475, 460, 480, 430, 500, 420, 500, 400, 460, 370,
                                   440,
                                   330, 430,
@@ -500,20 +423,27 @@ class MainShop:
                                   360,
                                   667, 370, 665, 380,
                                   660, 390, 650, 400, 645, 403, 635, 408, 625, 410, 600, 413
-                                  , fill=p, outline="black")
+                                  , fill=MainShop.p, outline="black")
         self.canva.create_polygon(330, 430, 290, 420, 220, 410, 225, 400, 225, 394, 220, 300, 170, 250, 160, 240, 155,
                                   220,
                                   140, 215, 130, 205,
                                   100, 130, 90, 70, 100, 60, 105, 50, 107, 40, 117, 42, 125, 50, 135, 55, 300, 85, 330,
                                   100,
                                   320, 200
-                                  , fill=r, outline="black")
+                                  , fill=MainShop.r, outline="black")
         self.canva.create_oval(190, 225, 160, 160, fill="blue")
         button9 = Button(root, text="Back", command=backtomain)
         button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
         button9_window = self.canva.create_window(340, 700, anchor=NW, window=button9)
         self.canva.pack()
         root.mainloop()
+
+    def encounterenemy(self):
+        rand_num = random.randint(0, 10)
+        if rand_num < 3:
+            self.showBScreen(AI_country.AI_country1)
+        elif rand_num > 8:
+            self.showBScreen(AI_country.AI_country2)
 
     def sleepScreen(self):
 
@@ -522,6 +452,7 @@ class MainShop:
 
         def backtomain():
             delete(self.canva)
+            self.encounterenemy()
             myshop.mainScreen()
 
         self.canva = Canvas(root, width="750", height="750", bg="black")
@@ -562,6 +493,14 @@ class MainShop:
             myshop.showShop(Player)
 
         self.canva = Canvas(root, width="750", height="750", bg="sky blue")
+        self.canva.create_rectangle(0,450,750,750, fill="green")
+        self.canva.create_rectangle(325,300,425,450, fill="grey")
+        self.canva.create_rectangle(300,350,450,450, fill="grey")
+        self.canva.create_rectangle(250,325,300,450, fill="grey")
+        self.canva.create_rectangle(450, 325, 500, 450, fill="grey")
+        self.canva.create_rectangle(440,310,510,340, fill="grey")
+        self.canva.create_rectangle(240, 310, 310, 340, fill="grey")
+        self.canva.create_rectangle(365,430,385,450,fill="saddle brown")
 
         button9 = Button(root, text="Sleep", command=goSleep)
         button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
@@ -594,15 +533,26 @@ class MainShop:
             delete(self.canva)
             myshop.showBScreen(AI_country.AI_country2)
 
-        self.canva = Canvas(root, width="750", height="750", bg="black")
+        def delete(name: Canvas):
+            name.destroy()
+
+        def backtomain():
+            delete(self.canva)
+            myshop.mainScreen()
+
+        self.canva = Canvas(root, width="750", height="750", bg="light blue")
 
         button9 = Button(root, text="Kingdom Ketafa", command=countryA, font=("Courier", 25))
-        button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
-        button9_window = self.canva.create_window(10, 400, anchor=NW, window=button9)
+        button9.configure(width=20, activebackground="#33B5E5", relief=FLAT)
+        button9_window = self.canva.create_window(150, 150, anchor=NW, window=button9)
 
         button7 = Button(root, text="Ezstabian Empire", command=countryB, font=("Courier", 25))
-        button7.configure(width=10, activebackground="#33B5E5", relief=FLAT)
-        button7_window = self.canva.create_window(400, 400, anchor=NW, window=button7)
+        button7.configure(width=20, activebackground="#33B5E5", relief=FLAT)
+        button7_window = self.canva.create_window(150, 550, anchor=NW, window=button7)
+
+        buttonquit = Button(root, text="Quit", command=backtomain)
+        buttonquit.configure(width=10, activebackground="brown", relief=FLAT)
+        buttonquit_window = self.canva.create_window(310, 700, anchor=NW, window=buttonquit)
 
         self.canva.pack()
         root.mainloop()
@@ -677,6 +627,15 @@ class MainShop:
             delete(self.canva)
             myshop.mainScreen()
 
+        def defeat(country):
+            if Player.get_total_cp(Player.troop_list, country) == 0:
+                backtomain()
+            elif country.get_total_cp(country.troop_list, Player) == 0:
+                if country.name == AI_country.AI_country1.name:
+                    MainShop.p = "green"
+                    print("win")
+                    backtomain()
+
         self.roundnum = 0
 
         self.canva = Canvas(root, width="750", height="750", bg="blue")
@@ -702,7 +661,7 @@ class MainShop:
         Attack
         """
         button4 = Button(root, text="Start to attack",
-                         command=lambda: [self.attack(country), self.updatePower(self.canva, country)],
+                         command=lambda: [self.attack(country), self.updatePower(self.canva, country), defeat(country)],
                          font=("Courier", 25))
         button4.configure(width=20, activebackground="#33B5E5", relief=FLAT)
         button4_window = self.canva.create_window(140, 400, anchor=NW, window=button4)
@@ -729,20 +688,27 @@ class MainShop:
         label2.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
         label2_window = self.canva.create_window(250, 600, anchor=NW, window=label2)
 
-        buttonquit = Button(root, text="Quit", command=backtomain)
-        buttonquit.configure(width=10, activebackground="brown", relief=FLAT)
-        buttonquit_window = self.canva.create_window(310, 700, anchor=NW, window=buttonquit)
 
         self.canva.pack()
         root.mainloop()
 
+    def startScreen(self):
+        self.canva = Canvas(root, width="750", height="750", bg="sky blue")
+        self.canva.create_rectangle(0, 450, 750, 750, fill="green")
+        self.canva.create_rectangle(325, 300, 425, 450, fill="grey")
+        self.canva.create_rectangle(300, 350, 450, 450, fill="grey")
+        self.canva.create_rectangle(250, 325, 300, 450, fill="grey")
+        self.canva.create_rectangle(450, 325, 500, 450, fill="grey")
+        self.canva.create_rectangle(440, 310, 510, 340, fill="grey")
+        self.canva.create_rectangle(240, 310, 310, 340, fill="grey")
+        self.canva.create_rectangle(365, 430, 385, 450, fill="saddle brown")
+
+
+        
+        self.canva.pack()
+        root.mainloop()
+
+
 
 myshop = MainShop('shop')
-myshop.showShop(Player)
-
-    def encounterenemy(self):
-        rand_num = random.randint(0,10)
-        if rand_num < 3:
-            self.showBScreen(AI_country.AI_country1)
-        elif rand_num > 8:
-            self.showBScreen(AI_country.AI_country2)
+myshop.mainScreen()
