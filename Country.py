@@ -1,5 +1,6 @@
 import Troop
 import Mercenary
+import random
 class country:
     """Country is used """
     def __init__(self, ID,name = ''):
@@ -10,7 +11,7 @@ class country:
                            'Spearman': [0,Troop.Spearman()], 'CalvaryRaider': [0,Troop.Spearman()], 'BlackSmith': [0,Troop.BlackSmith()],
                            'Ballista': [0,Troop.Ballsita()], 'Dragon': [0, Troop.Dragon()]}
         self.max_troop = 5
-        self.num_gold = 400
+        self.num_gold = 20
         self.gold_per_day = 10
         self.adjacent_countries = []
         # Technology Tree
@@ -49,5 +50,6 @@ class country:
             total += self.troop_list[key][0]
         return total
 
-
-
+    def random_attack_country(self):
+        num = random.randint(0,len(self.adjacent_countries))
+        return self.adjacent_countries[num]
