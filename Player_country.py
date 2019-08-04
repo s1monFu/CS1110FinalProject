@@ -52,7 +52,6 @@ class player_country(country):
                         other_country.troop_list[key][1].health -= 10
                     if other_country.troop_list[key][1].attack >= 5:
                         other_country.troop_list[key][1].attack -= 5
-        self.attack_countries(self, other_country)
 
 
 
@@ -112,4 +111,11 @@ class player_country(country):
 
     def show_gold(self):
         print("\n>>>\tI have " + str(self.num_gold))
+"""
+test = player_country(0,'kindom')
+test.add_troop(10,'Ranger')
+test2 = player_country(1,'bla')
+test2.add_troop(10,'Swordsman')
 
+test.attack_countries(test2)
+"""
