@@ -1,6 +1,13 @@
 """
 Map
 """
+
+        def defeat(country):
+            if Player.get_total_cp(Player.troop_list, country) == 0:
+                alert_popup('Battle result', 'You lose', 'Back to Main Scree')
+
+            elif country.get_total_cp(country.troop_list, Player) == 0:
+                alert_popup('Battle result', 'You win', 'Back to Main Scree')
 from tkinter import *
 from Player_country import player_country
 import AI_country
