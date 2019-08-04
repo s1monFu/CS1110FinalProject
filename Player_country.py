@@ -53,8 +53,14 @@ class player_country(country):
 
 
 
-    #def after_attack(self):
-    #    if self.troop_list['Priest'][0] > 0:
+    def after_attack(self):
+        """
+        Special effect for Priest and BlackSmith
+        :return:
+        """
+        for key in self.troop_list:
+            self.troop_list[key][1].health += (5 * self.troop_list['Priest'][0])
+            self.troop_list[key][1].attack += (5 * self.troop_list['BlackSmith'][0])
 
 
     def technologyTree(self):
