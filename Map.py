@@ -4,6 +4,7 @@ Map
 from tkinter import *
 from Country import *
 from Player_country import player_country
+import AI_country
 
 root = Tk()
 x = 1
@@ -23,14 +24,7 @@ else:
     r = "red"
 
 
-AI_country1 = country(0)
-AI_country1.add_troop(10, 'Ranger')
-AI_country2 = country(1)
-AI_country2.add_troop(10, 'Swordsman')
-Player = player_country( 2, 'Kindom')
-
-
-
+Player = player_country(2, 'Kindom')
 
 
 class MainShop:
@@ -49,7 +43,7 @@ class MainShop:
                 if checkCap():
                     if checkBal(10) == True:
                         Player.num_gold = int(Player.num_gold) - 10
-                        MainShop.howTroops += 1
+                        Player.troop_list['Ranger'][0] += 1
                         updateScreen(self.canva)
 
         def buySwordsman():
@@ -57,7 +51,7 @@ class MainShop:
                 if checkCap() == True:
                     if checkBal(15) == True:
                         Player.num_gold = int(Player.num_gold) - 15
-                        MainShop.howTroops += 1
+                        Player.troop_list['Swordsman'][0] += 1
                         updateScreen(self.canva)
 
         def buyPriest():
@@ -65,7 +59,7 @@ class MainShop:
                 if checkCap() == True:
                     if checkBal(30) == True:
                         Player.num_gold = int(Player.num_gold) - 30
-                        MainShop.howTroops += 1
+                        Player.troop_list['Priest'][0] += 1
                         updateScreen(self.canva)
 
         def buySpear():
@@ -73,15 +67,14 @@ class MainShop:
                 if checkCap() == True:
                     if checkBal(20) == True:
                         Player.num_gold = int(Player.num_gold) - 20
-                        MainShop.howTroops += 1
+                        Player.troop_list['Spearman'][0] += 1
                         updateScreen(self.canva)
 
         def buyHorse():
             if checkLevel(3) == True:
                 if checkCap() == True:
                     if checkBal(30) == True:
-                        Player.num_gold = int(Player.num_gold) - 30
-                        MainShop.howTroops += 1
+                        Player.troop_list['CalvaryRaider'][0] += 1
                         updateScreen(self.canva)
 
         def buyBlack():
@@ -89,7 +82,7 @@ class MainShop:
                 if checkCap() == True:
                     if checkBal(40) == True:
                         Player.num_gold = int(Player.num_gold) - 40
-                        MainShop.howTroops += 1
+                        Player.troop_list['BlackSmith'][0] += 1
                         updateScreen(self.canva)
 
         def buyBallista():
@@ -97,7 +90,7 @@ class MainShop:
                 if checkCap() == True:
                     if checkBal(50) == True:
                         Player.num_gold = int(Player.num_gold) - 50
-                        MainShop.howTroops += 1
+                        Player.troop_list['Ballista'][0] += 1
                         updateScreen(self.canva)
 
         def buyDragon():
@@ -105,11 +98,11 @@ class MainShop:
                 if checkCap() == True:
                     if checkBal(70) == True:
                         Player.num_gold = int(Player.num_gold) - 70
-                        MainShop.howTroops += 1
+                        Player.troop_list['Dragon'][0] += 1
                         updateScreen(self.canva)
 
         def checkCap():
-            if Player.max_troop > MainShop.howTroops:
+            if Player.max_troop > Player.getSoldiersNum():
                 return True
             else:
                 alert_popup("Uh Oh", "You don't have enough housing space!",
@@ -296,7 +289,6 @@ class MainShop:
         button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
         button9_window = self.canva.create_window(340, 700, anchor=NW, window=button9)
 
-
         label = Label(text="Gold:" + str(Player.num_gold), width=10)
         label.configure(width=10, activebackground="brown", relief=FLAT)
         label_window = self.canva.create_window(650, 10, anchor=NW, window=label)
@@ -409,33 +401,41 @@ class MainShop:
 
         self.canva = Canvas(root, width="750", height="750")
         self.canva.create_rectangle(0, 0, 750, 750, fill="blue")
-        self.canva.create_polygon(500, 500, 485, 480, 475, 475, 460, 480, 430, 500, 420, 500, 400, 460, 370, 440, 330, 430,
-                             290, 420, 220, 410,
-                             200, 420, 190, 435, 180, 455, 185, 460, 200, 490, 210, 500, 225, 505, 235, 510, 195, 530,
-                             160, 530, 155, 540, 150, 550, 145, 560, 150, 570, 160, 585, 175, 590, 200, 585, 210, 580,
-                             240, 569, 250, 569, 300, 560, 320, 560, 420, 575, 460, 650, 470, 660, 480, 665, 540, 650,
-                             570, 640, 580, 630, 585, 620, 587, 610, 590, 600, 585, 500
-                             , fill=z, outline="black")
-        self.canva.create_polygon(585, 500, 500, 500, 485, 480, 475, 475, 460, 480, 430, 500, 420, 500, 400, 460, 370, 440,
-                             330, 430,
-                             320, 200, 330, 100, 370, 90, 420, 85, 510, 83, 600, 90, 650, 100, 700, 120, 710, 130, 715,
-                             140, 717, 150, 715, 160,
-                             710, 170, 700, 180, 670, 190, 620, 260, 610, 270, 615, 285, 650, 340, 660, 350, 665, 360,
-                             667, 370, 665, 380,
-                             660, 390, 650, 400, 645, 403, 635, 408, 625, 410, 600, 413
-                             , fill=p, outline="black")
-        self.canva.create_polygon(330, 430, 290, 420, 220, 410, 225, 400, 225, 394, 220, 300, 170, 250, 160, 240, 155, 220,
-                             140, 215, 130, 205,
-                             100, 130, 90, 70, 100, 60, 105, 50, 107, 40, 117, 42, 125, 50, 135, 55, 300, 85, 330, 100,
-                             320, 200
-                             , fill=r, outline="black")
+        self.canva.create_polygon(500, 500, 485, 480, 475, 475, 460, 480, 430, 500, 420, 500, 400, 460, 370, 440, 330,
+                                  430,
+                                  290, 420, 220, 410,
+                                  200, 420, 190, 435, 180, 455, 185, 460, 200, 490, 210, 500, 225, 505, 235, 510, 195,
+                                  530,
+                                  160, 530, 155, 540, 150, 550, 145, 560, 150, 570, 160, 585, 175, 590, 200, 585, 210,
+                                  580,
+                                  240, 569, 250, 569, 300, 560, 320, 560, 420, 575, 460, 650, 470, 660, 480, 665, 540,
+                                  650,
+                                  570, 640, 580, 630, 585, 620, 587, 610, 590, 600, 585, 500
+                                  , fill=z, outline="black")
+        self.canva.create_polygon(585, 500, 500, 500, 485, 480, 475, 475, 460, 480, 430, 500, 420, 500, 400, 460, 370,
+                                  440,
+                                  330, 430,
+                                  320, 200, 330, 100, 370, 90, 420, 85, 510, 83, 600, 90, 650, 100, 700, 120, 710, 130,
+                                  715,
+                                  140, 717, 150, 715, 160,
+                                  710, 170, 700, 180, 670, 190, 620, 260, 610, 270, 615, 285, 650, 340, 660, 350, 665,
+                                  360,
+                                  667, 370, 665, 380,
+                                  660, 390, 650, 400, 645, 403, 635, 408, 625, 410, 600, 413
+                                  , fill=p, outline="black")
+        self.canva.create_polygon(330, 430, 290, 420, 220, 410, 225, 400, 225, 394, 220, 300, 170, 250, 160, 240, 155,
+                                  220,
+                                  140, 215, 130, 205,
+                                  100, 130, 90, 70, 100, 60, 105, 50, 107, 40, 117, 42, 125, 50, 135, 55, 300, 85, 330,
+                                  100,
+                                  320, 200
+                                  , fill=r, outline="black")
         self.canva.create_oval(190, 225, 160, 160, fill="blue")
         button9 = Button(root, text="Back", command=backtomain)
         button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
         button9_window = self.canva.create_window(340, 700, anchor=NW, window=button9)
         self.canva.pack()
         root.mainloop()
-
 
     def sleepScreen(self):
 
@@ -460,10 +460,7 @@ class MainShop:
         root.mainloop()
         print("something random")
 
-
     def mainScreen(self):
-
-
 
         def delete(name: Canvas):
             name.destroy()
@@ -487,7 +484,6 @@ class MainShop:
             myshop.showShop(Player)
 
         self.canva = Canvas(root, width="750", height="750", bg="sky blue")
-
 
         button9 = Button(root, text="Sleep", command=goSleep)
         button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
@@ -514,19 +510,19 @@ class MainShop:
 
         def countryA():
             delete(self.canva)
-            myshop.showBScreen()
+            myshop.showBScreen(AI_country.AI_country1)
 
         def countryB():
             delete(self.canva)
-            myshop.showBScreen()
+            myshop.showBScreen(AI_country.AI_country2)
 
         self.canva = Canvas(root, width="750", height="750", bg="black")
 
-        button9 = Button(root, text="a", command=countryA, font=("Courier", 25))
+        button9 = Button(root, text="Country A", command=countryA, font=("Courier", 25))
         button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
         button9_window = self.canva.create_window(10, 400, anchor=NW, window=button9)
 
-        button7 = Button(root, text="b", command=countryB, font=("Courier", 25))
+        button7 = Button(root, text="Country B", command=countryB, font=("Courier", 25))
         button7.configure(width=10, activebackground="#33B5E5", relief=FLAT)
         button7_window = self.canva.create_window(400, 400, anchor=NW, window=button7)
 
@@ -537,7 +533,13 @@ class MainShop:
         MainShop.delete(self.canva)
         myshop.mainScreen(self)
 
-    def showBScreen(self):
+
+    def attack(self,country):
+        Player.attack_countries(country)
+
+
+
+    def showBScreen(self, country):
 
         roundnum = 0
 
@@ -551,20 +553,17 @@ class MainShop:
         label22.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
         label22_window = self.canva.create_window(550, 10, anchor=NW, window=label22)
 
-        label222 = Label(text=str(Player.get_total_cp(Player.troop_list, AI_country1)), width=40)
-        label222.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
+        label222 = Label(text=str(Player.get_total_cp(Player.troop_list, country)), width=40)
+        label222.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
+                           fg="white")
         label222_window = self.canva.create_window(10, 150, anchor=NW, window=label222)
 
-        label2234 = Label(text=str( AI_country1.get_total_cp(AI_country1.troop_list, Player)), width=40)
-        label2234.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
+        label2234 = Label(text=str(country.get_total_cp(country.troop_list, Player)), width=40)
+        label2234.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
+                            fg="white")
         label2234_window = self.canva.create_window(550, 150, anchor=NW, window=label2234)
 
-
-        label3 = Label(text="Upgrades", width=40)
-        label3.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
-        label3_window = self.canva.create_window(260, 290, anchor=NW, window=label3)
-
-        button4 = Button(root, text="Start to attack", font=("Courier", 25))
+        button4 = Button(root, text="Start to attack",command=Player.attack_countries(country), font=("Courier", 25))
         button4.configure(width=20, activebackground="#33B5E5", relief=FLAT)
         button4_window = self.canva.create_window(140, 400, anchor=NW, window=button4)
 
@@ -586,6 +585,8 @@ class MainShop:
 
         self.canva.pack()
         root.mainloop()
+
+
 myshop = MainShop('shop')
 myshop.showShop(Player)
-   
+
