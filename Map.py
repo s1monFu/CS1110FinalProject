@@ -8,6 +8,78 @@ Map
 
             elif country.get_total_cp(country.troop_list, Player) == 0:
                 alert_popup('Battle result', 'You win', 'Back to Main Scree')
+                
+"""
+    def attack_countries(self, other_country):
+        """This function is used to attack other countries
+            A country wins by having more points than others
+            Points come from the number of troops, their health and attack, and your strategy"""
+        print("\n>>>\tEncounter enemy!")
+        my_point = self.get_total_cp(self.troop_list, other_country)
+        enemy_point = other_country.get_total_cp(other_country.troop_list, self)
+        if my_point <= 0:
+            return False
+        elif enemy_point <= 0:
+            return True
+        if my_point > enemy_point:
+            for key in self.troop_list:
+                if self.troop_list[key][0] > 0:
+                    if self.troop_list[key][0] >= 2:
+                        self.troop_list[key][0] -= 2
+                    else:
+                        self.troop_list[key][0] = 0
+                    if self.troop_list[key][1].health > 10:
+                        self.troop_list[key][1].health -= 10
+                    else:
+                        self.troop_list[key][1].health = 0
+                    if self.troop_list[key][1].attack >= 5:
+                        self.troop_list[key][1].attack -= 5
+                    else:
+                        self.troop_list[key][1].attack = 0
+            for key in other_country.troop_list:
+                if other_country.troop_list[key][0] > 0:
+                    if other_country.troop_list[key][0] >= 5:
+                        other_country.troop_list[key][0] -= 5
+                    else:
+                        other_country.troop_list[key][0] = 0
+                    if other_country.troop_list[key][1].health > 15:
+                        other_country.troop_list[key][1].health -= 15
+                    else:
+                        other_country.troop_list[key][1].health = 0
+                    if other_country.troop_list[key][1].attack >=10:
+                        other_country.troop_list[key][1].attack -= 10
+                    else:
+                        other_country.troop_list[key][1].attack = 0
+        if enemy_point >= my_point:
+            for key in self.troop_list:
+                if self.troop_list[key][0] > 0:
+                    if self.troop_list[key][0] >= 5:
+                        self.troop_list[key][0] -= 5
+                    else:
+                        self.troop_list[key][0] = 0
+                    if self.troop_list[key][1].health > 15:
+                        self.troop_list[key][1].health -= 15
+                    else:
+                        self.troop_list[key][1].health = 0
+                    if self.troop_list[key][1].attack >= 10:
+                        self.troop_list[key][1].attack -= 10
+                    else:
+                        self.troop_list[key][1].attack = 0
+            for key in other_country.troop_list:
+                if other_country.troop_list[key][0] > 0:
+                    if other_country.troop_list[key][0] >= 2:
+                        other_country.troop_list[key][0] -= 2
+                    else:
+                        other_country.troop_list[key][0] = 0
+                    if other_country.troop_list[key][1].health > 10:
+                        other_country.troop_list[key][1].health -= 10
+                    else:
+                        other_country.troop_list[key][1].health = 0
+                    if other_country.troop_list[key][1].attack >=5:
+                        other_country.troop_list[key][1].attack -= 5
+                    else:
+                        other_country.troop_list[key][1].attack = 0
+"""
 from tkinter import *
 from Player_country import player_country
 import AI_country
