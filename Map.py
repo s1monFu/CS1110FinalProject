@@ -2,9 +2,9 @@
 Map
 """
 from tkinter import *
-from Country import *
 from Player_country import player_country
 import AI_country
+import Strategy
 
 root = Tk()
 x = 1
@@ -539,19 +539,18 @@ class MainShop:
 
     def updatePower(self,name: Canvas, thecountry):
         self.name = name
-        self.name.after(200, self.changeTextPower(thecountry))
-
-    def changeTextPower(self, thecountry):
+        self.name.after(200, self.changeTextPowerSelf(thecountry))
+        self.name.after(0, self.changeTextPowerEne(thecountry))
+    def changeTextPowerSelf(self, thecountry):
         label222 = Label(text=str(Player.get_total_cp(Player.troop_list, thecountry)), width=40)
         label222.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
                            fg="white")
         label222_window = self.canva.create_window(10, 150, anchor=NW, window=label222)
-
+    def changeTextPowerEne(self, thecountry):
         label2234 = Label(text=str(thecountry.get_total_cp(thecountry.troop_list, Player)), width=40)
         label2234.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
                             fg="white")
         label2234_window = self.canva.create_window(550, 150, anchor=NW, window=label2234)
-
     def attack(self,thecountry):
         Player.attack_countries(thecountry)
         self.updatePower(self.canva, thecountry)
@@ -581,20 +580,23 @@ class MainShop:
         label2234.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
                             fg="white")
         label2234_window = self.canva.create_window(550, 150, anchor=NW, window=label2234)
-
+        if country.get_total_cp(country.troop_list, Player)>= Player.get_total_cp(Player.troop_list, country):
+            print("You lose")
+        else:
+            print("You won")
         button4 = Button(root, text="Start to attack",command=self.attack(country), font=("Courier", 25))
         button4.configure(width=20, activebackground="#33B5E5", relief=FLAT)
         button4_window = self.canva.create_window(140, 400, anchor=NW, window=button4)
 
-        button5 = Button(root, text="Aggressive", font=("Courier", 15))
+        button5 = Button(root, text="Aggressive", command=Strategy.aggressive(Player),font=("Courier", 15))
         button5.configure(width=15, activebackground="#33B5E5", relief=FLAT)
         button5_window = self.canva.create_window(50, 500, anchor=NW, window=button5)
 
-        button6 = Button(root, text="Neutral", font=("Courier", 15))
+        button6 = Button(root, text="Neutral", command = Strategy.neutral(Player),font=("Courier", 15))
         button6.configure(width=15, activebackground="#33B5E5", relief=FLAT)
         button6_window = self.canva.create_window(275, 500, anchor=NW, window=button6)
 
-        button7 = Button(root, text="Defensive", font=("Courier", 15))
+        button7 = Button(root, text="Defensive", command = Strategy.defensive(Player),font=("Courier", 15))
         button7.configure(width=15, activebackground="#33B5E5", relief=FLAT)
         button7_window = self.canva.create_window(500, 500, anchor=NW, window=button7)
 
