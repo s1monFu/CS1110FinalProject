@@ -190,6 +190,8 @@ class MainShop:
             self.name = name
             self.name.after(200, changeText())
 
+
+
         def delete(name: Canvas):
             name.destroy()
 
@@ -205,6 +207,8 @@ class MainShop:
             label = Label(text="Gold:" + str(Player.num_gold), width=10)
             label.configure(width=10, activebackground="brown", relief=FLAT)
             label_window = self.canva.create_window(650, 10, anchor=NW, window=label)
+
+
 
         self.canva = Canvas(root, width="750", height="750", bg="brown")
         label2 = Label(text="Troops", width=40)
@@ -533,9 +537,24 @@ class MainShop:
         MainShop.delete(self.canva)
         myshop.mainScreen(self)
 
+    def updatePower(self,name: Canvas, thecountry):
+        self.name = name
+        self.name.after(200, self.changeTextPower(thecountry))
 
-    def attack(self,country):
-        Player.attack_countries(country)
+    def changeTextPower(self, thecountry):
+        label222 = Label(text=str(Player.get_total_cp(Player.troop_list, thecountry)), width=40)
+        label222.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
+                           fg="white")
+        label222_window = self.canva.create_window(10, 150, anchor=NW, window=label222)
+
+        label2234 = Label(text=str(thecountry.get_total_cp(thecountry.troop_list, Player)), width=40)
+        label2234.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
+                            fg="white")
+        label2234_window = self.canva.create_window(550, 150, anchor=NW, window=label2234)
+
+    def attack(self,thecountry):
+        Player.attack_countries(thecountry)
+        self.updatePower(self.canva, thecountry)
 
 
 
@@ -563,7 +582,7 @@ class MainShop:
                             fg="white")
         label2234_window = self.canva.create_window(550, 150, anchor=NW, window=label2234)
 
-        button4 = Button(root, text="Start to attack",command=Player.attack_countries(country), font=("Courier", 25))
+        button4 = Button(root, text="Start to attack",command=self.attack(country), font=("Courier", 25))
         button4.configure(width=20, activebackground="#33B5E5", relief=FLAT)
         button4_window = self.canva.create_window(140, 400, anchor=NW, window=button4)
 
