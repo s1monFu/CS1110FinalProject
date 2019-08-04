@@ -804,6 +804,9 @@ class MainShop:
         self.canva.create_rectangle(440, 310, 510, 340, fill="grey")
         self.canva.create_rectangle(240, 310, 310, 340, fill="grey")
         self.canva.create_rectangle(365, 430, 385, 450, fill="saddle brown")
+        
+        
+        
 
 
         
@@ -814,3 +817,51 @@ class MainShop:
 
 myshop = MainShop('shop')
 myshop.mainScreen()
+
+    def showMShop(self, Player):
+        a = random.randint(0, 2)
+        def alert_popup(title, message, path):
+            """Generate a pop-up window for special messages."""
+            root = Tk()
+            root.title(title)
+            w = 400  # popup window width
+            h = 200  # popup window height
+            sw = root.winfo_screenwidth()
+            sh = root.winfo_screenheight()
+            x = (sw - w) / 2
+            y = (sh - h) / 2
+            root.geometry('%dx%d+%d+%d' % (w, h, x, y))
+            m = message
+            m += '\n'
+            m += path
+            w = Label(root, text=m, width=120, height=10)
+            w.pack()
+            b = Button(root, text="OK", command=root.destroy, width=10)
+            b.pack()
+            mainloop()
+        def buyEle():
+            if checkLevel(1) == True:
+                if checkCap() == True:
+                    if checkBal(40) == True:
+                        if a == 0:
+                            Player.num_gold = int(Player.num_gold) - 20
+                            Player.troop_list['WarElephant'][0] += 1
+                            MainShop.howTroops += 1
+                            updateScreen(self.canva)
+                        else:
+                             alert_popup("",
+                                                 "You can only buy mercenary when merchant is traveling to your country",
+                                                 "")
+
+        def buyCross():
+            if checkLevel(2) == True:
+                if checkCap() == True:
+                    if checkBal(20) == True:
+                        if a == 0:
+                            Player.num_gold = int(Player.num_gold) - 40
+                            Player.troop_list['CrossbowMan'][0] += 1
+                            MainShop.howTroops += 1
+                            updateScreen(self.canva)
+                        else:
+                            alert_popup("", "You can only buy mercenary when merchant is traveling to your country", "")
+
