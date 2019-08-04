@@ -1,105 +1,3 @@
-    def showMShop(self, Player):
-
-        def buyEle():
-            if checkLevel(1) == True:
-                if checkCap() == True:
-                    if checkBal(40) == True:
-                        if Merchant.inPlayerCountry:
-                            Player.num_gold = int(Player.num_gold) - 20
-                            Player.troop_list['WarElephant'][0] += 1
-                            MainShop.howTroops += 1
-                            updateScreen(self.canva)
-                        else:
-                            showShop.alert_popup("","You can only buy mercenary when merchant is traveling to your country","")
-
-        def buyCross():
-            if checkLevel(2) == True:
-                if checkCap() == True:
-                    if checkBal(20) == True:
-                        if Merchant.inPlayerCountry:
-                            Player.num_gold = int(Player.num_gold) - 40
-                            Player.troop_list['CrossbowMan'][0] += 1
-                            MainShop.howTroops += 1
-                            updateScreen(self.canva)
-                        else:
-                            alert_popup("","You can only buy mercenary when merchant is traveling to your country","")
-
-        def checkCap():
-            if Player.max_troop > MainShop.howTroops:
-                return True
-            else:
-                alert_popup("Uh Oh", "You don't have enough housing space!",
-                            "You currently can only hold " + str(Player.max_troop) + " soldiers.")
-
-        def checkLevel(needed):
-            if Player.level >= needed:
-                return True
-            else:
-                alert_popup("Uh Oh", "You are not high enough level!",
-                            "You need to be level " + str(needed) + " to purchase this.")
-
-        def checkBal(cost):
-            if Player.num_gold >= cost:
-                return True
-            else:
-                alert_popup("Uh Oh!", "You do not have enough gold", ":(")
-
-        def alert_popup(title, message, path):
-            """Generate a pop-up window for special messages."""
-            root = Tk()
-            root.title(title)
-            w = 400  # popup window width
-            h = 200  # popup window height
-            sw = root.winfo_screenwidth()
-            sh = root.winfo_screenheight()
-            x = (sw - w) / 2
-            y = (sh - h) / 2
-            root.geometry('%dx%d+%d+%d' % (w, h, x, y))
-            m = message
-            m += '\n'
-            m += path
-            w = Label(root, text=m, width=120, height=10)
-            w.pack()
-            b = Button(root, text="OK", command=root.destroy, width=10)
-            b.pack()
-            mainloop()
-
-        def updateScreen(name: Canvas):
-            self.name = name
-            self.name.after(200, changeText())
-
-        def changeText():
-            label = Label(text=Player.num_gold, width=10)
-            label.configure(width=10, activebackground="brown", relief=FLAT)
-            label_window = self.canva.create_window(700, 10, anchor=NW, window=label)
-
-        self.canva = Canvas(root, width="750", height="750", bg="brown")
-        labell = Label(text="Gold:" + str(Player.num_gold), width=10)
-        labell.configure(width=10, activebackground="brown", relief=FLAT)
-        labell_window = self.canva.create_window(660, 10, anchor=NW, window=labell)
-
-        buttony2 = Button(root, text="Crossbowman", command=buyCross)
-        buttony2.configure(width=10, activebackground="#33B5E5", relief=FLAT)
-        buttony2_window = self.canva.create_window(10, 40, anchor=NW, window=buttony2)
-        labey2 = Label(text="Cost: 20 Gold. An expert marksman, he has 20 health, and only 40 attack", width=10,
-                       anchor="w")
-        labey2.configure(width=60, activebackground="brown", relief=FLAT)
-        labey2_window = self.canva.create_window(100, 40, anchor=NW, window=labey2)
-
-        buttony3 = Button(root, text="War Elephant", command=buyEle)
-        buttony3.configure(width=10, activebackground="#33B5E5", relief=FLAT)
-        buttony3_window = self.canva.create_window(10, 70, anchor=NW, window=buttony3)
-        labey3 = Label(text="Cost: 40 Gold. A walking tank, he has 75 health, and only 35 attack", width=10,
-                       anchor="w")
-        labey3.configure(width=60, activebackground="brown", relief=FLAT)
-        labey3_window = self.canva.create_window(100, 70, anchor=NW, window=labey3)
-
-        label2 = Label(text="Merchant Shop", width=40)
-        label2.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
-        label2_window = self.canva.create_window(250, 10, anchor=NW, window=label2)
-
-        self.canva.pack()
-        root.mainloop()
 """
 Map
 """
@@ -118,6 +16,8 @@ class MainShop:
     howTroops = 0
     timesBought = 0
     day_count = 0
+    leveltimesBought = 0
+
 
     x = 1
     if x == 1:
@@ -285,6 +185,10 @@ class MainShop:
                 labe8.configure(width=60, activebackground="brown", relief=FLAT)
                 labe8_window = self.canva.create_window(100, 320, anchor=NW, window=labe8)
 
+        def updateUpgraded(name: Canvas):
+            self.name = name
+            self.name.after(200, changeText3())
+
         def updateUpgrade(name: Canvas):
             self.name = name
             self.name.after(200, changeText2())
@@ -296,9 +200,56 @@ class MainShop:
         def delete(name: Canvas):
             name.destroy()
 
-        def quity():
-            delete(self.canva)
-            myshop.sleepScreen()
+        def increaseLMax():
+            if MainShop.timesBought == 0:
+                if checkBal(30) == True:
+                    Player.level += 1
+                    Player.num_gold = int(Player.num_gold) - 30
+                    updateScreen(self.canva)
+                    updateUpgraded(self.canva)
+                    MainShop.leveltimesBought += 1
+            elif MainShop.timesBought == 1:
+                    if checkBal(40) == True:
+                        Player.level += 1
+                        updateScreen(self.canva)
+                        Player.num_gold = int(Player.num_gold) - 40
+                        updateScreen(self.canva)
+                        updateUpgraded(self.canva)
+                        MainShop.leveltimesBought += 1
+            elif MainShop.timesBought == 2:
+                    if checkBal(50) == True:
+                        Player.level += 1
+                        updateScreen(self.canva)
+                        Player.num_gold = int(Player.num_gold) - 50
+                        updateScreen(self.canva)
+                        updateUpgraded(self.canva)
+                        MainShop.leveltimesBought += 1
+            elif MainShop.timeslevel == 3:
+                    if checkBal(60) == True:
+                        Player.level += 1
+                        updateScreen(self.canva)
+                        Player.num_gold = int(Player.num_gold) - 60
+                        updateScreen(self.canva)
+                        updateUpgraded(self.canva)
+                        MainShop.leveltimesBought += 1
+
+        def changeText3():
+            if MainShop.leveltimesBought == 0:
+                labe99 = Label(text="Cost: 40 Gold. Increase your level to 3.", width=10, anchor="w")
+                labe99.configure(width=60, activebackground="brown", relief=FLAT)
+                labe8_window99 = self.canva.create_window(100, 350, anchor=NW, window=labe99)
+            elif MainShop.leveltimesBought == 1:
+                labe99 = Label(text="Cost: 50 Gold. Increases your level to 4", width=10, anchor="w")
+                labe99.configure(width=60, activebackground="brown", relief=FLAT)
+                labe99_window = self.canva.create_window(100, 350, anchor=NW, window=labe99)
+            elif MainShop.leveltimesBought == 2:
+                labe99 = Label(text="Cost: 60 Gold. Increases your level to 5", width=10, anchor="w")
+                labe99.configure(width=60, activebackground="brown", relief=FLAT)
+                labe99_window = self.canva.create_window(100, 350, anchor=NW, window=labe99)
+            elif MainShop.leveltimesBought == 3:
+                labe99 = Label(text="MAXED. You cannot purchase this anymore.", width=10, anchor="w")
+                labe99.configure(width=60, activebackground="brown", relief=FLAT)
+                labe99_window = self.canva.create_window(100, 350, anchor=NW, window=labe99)
 
         def quit():
             delete(self.canva)
@@ -381,12 +332,19 @@ class MainShop:
         labe8.configure(width=60, activebackground="brown", relief=FLAT)
         labe8_window = self.canva.create_window(100, 250, anchor=NW, window=labe8)
 
-        button8 = Button(root, text="Troop Space", command=increaseMax)
-        button8.configure(width=10, activebackground="#33B5E5", relief=FLAT)
-        button8_window = self.canva.create_window(10, 320, anchor=NW, window=button8)
-        labe8 = Label(text="Cost: 25 Gold. Increase your maximum troops to 8.", width=10, anchor="w")
-        labe8.configure(width=60, activebackground="brown", relief=FLAT)
-        labe8_window = self.canva.create_window(100, 320, anchor=NW, window=labe8)
+        button11 = Button(root, text="Troop Space", command=increaseMax)
+        button11.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        button11_window = self.canva.create_window(10, 320, anchor=NW, window=button11)
+        labe11 = Label(text="Cost: 25 Gold. Increase your maximum troops to 8.", width=10, anchor="w")
+        labe11.configure(width=60, activebackground="brown", relief=FLAT)
+        labe11_window = self.canva.create_window(100, 320, anchor=NW, window=labe11)
+
+        button99 = Button(root, text="Level", command=increaseLMax)
+        button99.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        button99_window = self.canva.create_window(10, 350, anchor=NW, window=button99)
+        labe99 = Label(text="Cost: 30 Gold. Increases your level to 2", width=10, anchor="w")
+        labe99.configure(width=60, activebackground="brown", relief=FLAT)
+        labe99_window = self.canva.create_window(100, 350, anchor=NW, window=labe99)
 
         button9 = Button(root, text="Back", command=quit)
         button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
@@ -399,20 +357,23 @@ class MainShop:
         root.mainloop()
 
     def showMShop(self, Player):
-
+        a = random.randint(0,2)
         def buyEle():
             if checkLevel(1) == True:
                 if checkCap() == True:
                     if checkBal(40) == True:
                         Player.num_gold = int(Player.num_gold) - 40
+                        Player.troop_list['WarElephant'][0] += 1
                         MainShop.howTroops += 1
                         updateScreen(self.canva)
+
 
         def buyCross():
             if checkLevel(2) == True:
                 if checkCap() == True:
                     if checkBal(20) == True:
                         Player.num_gold = int(Player.num_gold) - 20
+                        Player.troop_list['CrossbowMan'][0] += 1
                         MainShop.howTroops += 1
                         updateScreen(self.canva)
 
@@ -460,8 +421,20 @@ class MainShop:
             self.name = name
             self.name.after(200, changeText())
 
+        def delete(name: Canvas):
+            name.destroy()
+
+        def backtomain():
+            delete(self.canva)
+            self.encounterenemy()
+            myshop.mainScreen()
+
+        def backtomain2():
+            delete(self.canva)
+            myshop.mainScreen()
+
         def changeText():
-            label = Label(text=Player.num_gold, width=10)
+            label = Label(text=str(Player.num_gold), width=10)
             label.configure(width=10, activebackground="brown", relief=FLAT)
             label_window = self.canva.create_window(700, 10, anchor=NW, window=label)
 
@@ -489,6 +462,10 @@ class MainShop:
         label2 = Label(text="Merchant Shop", width=40)
         label2.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown", fg="white")
         label2_window = self.canva.create_window(250, 10, anchor=NW, window=label2)
+
+        button9 = Button(root, text="Back", command=backtomain2)
+        button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        button9_window = self.canva.create_window(340, 700, anchor=NW, window=button9)
 
         self.canva.pack()
         root.mainloop()
@@ -534,9 +511,11 @@ class MainShop:
                                   320, 200
                                   , fill=MainShop.r, outline="black")
         self.canva.create_oval(190, 225, 160, 160, fill="blue")
+
         button9 = Button(root, text="Back", command=backtomain)
         button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
         button9_window = self.canva.create_window(340, 700, anchor=NW, window=button9)
+
         self.canva.pack()
         root.mainloop()
 
@@ -590,6 +569,10 @@ class MainShop:
             delete(self.canva)
             myshop.showMap()
 
+        def merchantt():
+            delete(self.canva)
+            myshop.showMShop(Player)
+
         def shopp():
             delete(self.canva)
             myshop.showShop(Player)
@@ -606,19 +589,23 @@ class MainShop:
 
         button9 = Button(root, text="Sleep", command=goSleep)
         button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
-        button9_window = self.canva.create_window(10, 700, anchor=NW, window=button9)
+        button9_window = self.canva.create_window(50, 700, anchor=NW, window=button9)
 
         button4 = Button(root, text="Battle", command=goBattle)
         button4.configure(width=10, activebackground="#33B5E5", relief=FLAT)
-        button4_window = self.canva.create_window(180, 700, anchor=NW, window=button4)
+        button4_window = self.canva.create_window(196, 700, anchor=NW, window=button4)
 
         button3 = Button(root, text="Map", command=mapp)
         button3.configure(width=10, activebackground="#33B5E5", relief=FLAT)
-        button3_window = self.canva.create_window(360, 700, anchor=NW, window=button3)
+        button3_window = self.canva.create_window(342, 700, anchor=NW, window=button3)
 
         button1 = Button(root, text="Shop", command=shopp)
         button1.configure(width=10, activebackground="#33B5E5", relief=FLAT)
-        button1_window = self.canva.create_window(540, 700, anchor=NW, window=button1)
+        button1_window = self.canva.create_window(488, 700, anchor=NW, window=button1)
+
+        button = Button(root, text="Merchant Shop", command=merchantt)
+        button.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        button_window = self.canva.create_window(632, 700, anchor=NW, window=button)
 
         self.canva.pack()
         root.mainloop()
@@ -652,7 +639,7 @@ class MainShop:
         button7.configure(width=20, activebackground="#33B5E5", relief=FLAT)
         button7_window = self.canva.create_window(150, 550, anchor=NW, window=button7)
 
-        buttonquit = Button(root, text="Quit", command=backtomain)
+        buttonquit = Button(root, text="Back", command=backtomain)
         buttonquit.configure(width=10, activebackground="brown", relief=FLAT)
         buttonquit_window = self.canva.create_window(310, 700, anchor=NW, window=buttonquit)
 
@@ -729,14 +716,33 @@ class MainShop:
             delete(self.canva)
             myshop.mainScreen()
 
+        def gotoLose():
+            delete(self.canva)
+            myshop.loseScreen()
+
+        def gotoWin():
+            delete(self.canva)
+            myshop.winScreen()
+
+        def gotoWon():
+            delete(self.canva)
+            myshop.wonScreen()
+
         def defeat(country):
             if Player.get_total_cp(Player.troop_list, country) == 0:
-                backtomain()
+                gotoLose()
             elif country.get_total_cp(country.troop_list, Player) == 0:
                 if country.name == AI_country.AI_country1.name:
                     MainShop.p = "green"
-                    print("win")
-                    backtomain()
+                    if MainShop.r == "green":
+                        gotoWin()
+                    else:
+                        gotoWin()
+                elif country.name == AI_country.AI_country2.name:
+                    MainShop.r = "green"
+                    if MainShop.p == "green":
+                        gotoWin()
+                    else: gotoWin()
 
         self.roundnum = 0
 
@@ -794,7 +800,59 @@ class MainShop:
         self.canva.pack()
         root.mainloop()
 
+    def loseScreen(self):
+        def delete(name: Canvas):
+            name.destroy()
+
+        def backtomain():
+            delete(self.canva)
+            myshop.mainScreen()
+
+        self.canva = Canvas(root, width="750", height="750", bg="Black")
+        self.canva.create_text((375,375), text="You Lost", font=("Impact", 30), fill="white")
+        button9 = Button(root, text="Back", command=backtomain)
+        button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        button9_window = self.canva.create_window(350, 550, anchor=NW, window=button9)
+
+        self.canva.pack()
+        root.mainloop()
+
+    def winScreen(self):
+        def delete(name: Canvas):
+            name.destroy()
+
+        def backtomain():
+            delete(self.canva)
+            myshop.mainScreen()
+
+        self.canva = Canvas(root, width="750", height="750", bg="Black")
+        self.canva.create_text((375, 375), text="You Won", font=("Impact", 30), fill="white")
+        button9 = Button(root, text="Back", command=backtomain)
+        button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        button9_window = self.canva.create_window(350, 550, anchor=NW, window=button9)
+
+        self.canva.pack()
+        root.mainloop()
+
+    def wonScreen(self):
+
+
+        self.canva = Canvas(root, width="750", height="750", bg="black")
+        self.canva.create_text((375, 375), text="You Won The Game!", font=("Impact", 30))
+        self.canva.create_text((375, 575), text="You Conquered In "+ MainShop.day_count + "Days", font=("Impact", 30))
+
+        self.canva.pack()
+        root.mainloop()
+
     def startScreen(self):
+
+        def delete(name: Canvas):
+            name.destroy()
+
+        def backtomain():
+            delete(self.canva)
+            myshop.mainScreen()
+
         self.canva = Canvas(root, width="750", height="750", bg="sky blue")
         self.canva.create_rectangle(0, 450, 750, 750, fill="green")
         self.canva.create_rectangle(325, 300, 425, 450, fill="grey")
@@ -804,64 +862,23 @@ class MainShop:
         self.canva.create_rectangle(440, 310, 510, 340, fill="grey")
         self.canva.create_rectangle(240, 310, 310, 340, fill="grey")
         self.canva.create_rectangle(365, 430, 385, 450, fill="saddle brown")
-        
-        
-        
 
+        self.canva.create_text((400,200), text="Clash\n            Of\n                Kingdoms", font=("Impact",60), fill="White")
+        self.canva.create_polygon(350, 240, 350, 270, 393, 270,393,240,382,250,371,240,360,250, fill="yellow", outline="black")
 
-        
+        button9 = Button(root, text="Start Game", command=backtomain, font=("Courier", 15))
+        button9.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+        button9_window = self.canva.create_window(310, 500, anchor=NW, window=button9)
+
+        self.canva.create_text((375, 650), text="Developed By\n A+ Studios", font=("Arial", 35),fill="black")
+
         self.canva.pack()
         root.mainloop()
 
 
 
 myshop = MainShop('shop')
-myshop.mainScreen()
+myshop.startScreen()
 
-    def showMShop(self, Player):
-        a = random.randint(0, 2)
-        def alert_popup(title, message, path):
-            """Generate a pop-up window for special messages."""
-            root = Tk()
-            root.title(title)
-            w = 400  # popup window width
-            h = 200  # popup window height
-            sw = root.winfo_screenwidth()
-            sh = root.winfo_screenheight()
-            x = (sw - w) / 2
-            y = (sh - h) / 2
-            root.geometry('%dx%d+%d+%d' % (w, h, x, y))
-            m = message
-            m += '\n'
-            m += path
-            w = Label(root, text=m, width=120, height=10)
-            w.pack()
-            b = Button(root, text="OK", command=root.destroy, width=10)
-            b.pack()
-            mainloop()
-        def buyEle():
-            if checkLevel(1) == True:
-                if checkCap() == True:
-                    if checkBal(40) == True:
-                        if a == 0:
-                            Player.num_gold = int(Player.num_gold) - 20
-                            Player.troop_list['WarElephant'][0] += 1
-                            MainShop.howTroops += 1
-                            updateScreen(self.canva)
-                        else:
-                             alert_popup("",
-                                                 "You can only buy mercenary when merchant is traveling to your country",
-                                                 "")
 
-        def buyCross():
-            if checkLevel(2) == True:
-                if checkCap() == True:
-                    if checkBal(20) == True:
-                        if a == 0:
-                            Player.num_gold = int(Player.num_gold) - 40
-                            Player.troop_list['CrossbowMan'][0] += 1
-                            MainShop.howTroops += 1
-                            updateScreen(self.canva)
-                        else:
-                            alert_popup("", "You can only buy mercenary when merchant is traveling to your country", "")
 
