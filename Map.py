@@ -23,7 +23,6 @@ if f == 1:
 else:
     r = "red"
 
-
 Player = player_country(2, 'Kindom')
 
 
@@ -190,8 +189,6 @@ class MainShop:
             self.name = name
             self.name.after(200, changeText())
 
-
-
         def delete(name: Canvas):
             name.destroy()
 
@@ -207,8 +204,6 @@ class MainShop:
             label = Label(text="Gold:" + str(Player.num_gold), width=10)
             label.configure(width=10, activebackground="brown", relief=FLAT)
             label_window = self.canva.create_window(650, 10, anchor=NW, window=label)
-
-
 
         self.canva = Canvas(root, width="750", height="750", bg="brown")
         label2 = Label(text="Troops", width=40)
@@ -541,8 +536,17 @@ class MainShop:
         self.name = name
         self.name.after(200, self.changeTextPowerSelf(thecountry))
 
+    def updatePowerS(self, name: Canvas, thecountry):
+        self.name = name
+        self.name.after(20, self.changeTextPowerStratA(thecountry))
 
-    def changeTextPowerSelf(self,thecountry):
+    def changeTextPowerStratA(self, thecountry):
+        label222 = Label(text=str(int(Player.get_total_cp(Player.troop_list, thecountry))+int(Strategy.aggressive(Player))), width=40)
+        label222.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
+                           fg="white")
+        label222_window = self.canva.create_window(10, 150, anchor=NW, window=label222)
+
+    def changeTextPowerSelf(self, thecountry):
         label222 = Label(text=str(Player.get_total_cp(Player.troop_list, thecountry)), width=40)
         label222.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
                            fg="white")
@@ -553,15 +557,10 @@ class MainShop:
                             fg="white")
         label2234_window = self.canva.create_window(550, 150, anchor=NW, window=label2234)
 
-
     def attack(self, thecountry):
         Player.attack_countries(thecountry)
 
-
-
-
     def showBScreen(self, country):
-
 
         roundnum = 0
 
@@ -587,19 +586,24 @@ class MainShop:
         """
         Attack
         """
-        button4 = Button(root, text="Start to attack",command=lambda:[self.attack(country),self.updatePower(self.canva,country)], font=("Courier", 25))
+        button4 = Button(root, text="Start to attack",
+                         command=lambda: [self.attack(country), self.updatePower(self.canva, country)],
+                         font=("Courier", 25))
         button4.configure(width=20, activebackground="#33B5E5", relief=FLAT)
         button4_window = self.canva.create_window(140, 400, anchor=NW, window=button4)
 
-        button5 = Button(root, text="Aggressive", command=Strategy.aggressive(Player),font=("Courier", 15))
+        button5 = Button(root, text="Aggressive", command=lambda: [Strategy.aggressive(Player),
+                                                                   self.updatePowerS(self.canva, country)], font=("Courier", 15))
         button5.configure(width=15, activebackground="#33B5E5", relief=FLAT)
         button5_window = self.canva.create_window(50, 500, anchor=NW, window=button5)
 
-        button6 = Button(root, text="Neutral", command = Strategy.neutral(Player),font=("Courier", 15))
+        button6 = Button(root, text="Neutral", command=lambda: [Strategy.neutral(Player),
+                                                                   self.updatePower(self.canva, country)], font=("Courier", 15))
         button6.configure(width=15, activebackground="#33B5E5", relief=FLAT)
         button6_window = self.canva.create_window(275, 500, anchor=NW, window=button6)
 
-        button7 = Button(root, text="Defensive", command = Strategy.defensive(Player),font=("Courier", 15))
+        button7 = Button(root, text="Defensive", command=lambda: [Strategy.defensive(Player),
+                                                                   self.updatePower(self.canva, country)], font=("Courier", 15))
         button7.configure(width=15, activebackground="#33B5E5", relief=FLAT)
         button7_window = self.canva.create_window(500, 500, anchor=NW, window=button7)
 
@@ -613,4 +617,3 @@ class MainShop:
 
 myshop = MainShop('shop')
 myshop.showShop(Player)
-
