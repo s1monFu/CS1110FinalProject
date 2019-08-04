@@ -133,3 +133,64 @@ class Dragon(Troops):
 
     def isMercenary(self):
         return False
+class CrossbowMan(Troops):
+    cost = 65
+    def __init__(self):
+        super().__init__(60,80,65)
+        self.name = "CrossbowMan"
+    def getPoint(self, other_country):
+        total_num = 0
+        for key in other_country.troop_list:
+            total_num += other_country.troop_list[key][0]
+        if total_num > 10:
+            return int(self.health+self.attack+100)
+        else:
+            return int(self.health + self.attack)
+    def isMercenary(self):
+        return True
+class WarElephant(Troops):
+    cost = 70
+    def __init__(self):
+        super().__init__(120,50,70)
+        self.name = "WarElephant"
+    def getPoint(self, other_country):
+        total_num = 0
+        for key in other_country.troop_list:
+            total_num += other_country.troop_list[key][0]
+        if total_num > 10:
+            return int(self.health+self.attack+100)
+        else:
+            return int(self.health + self.attack)
+    def isMercenary(self):
+        return True
+
+class CrossbowMan(Troops):
+    cost = 65
+    def __init__(self):
+        super().__init__(60,80,65)
+        self.name = "CrossbowMan"
+    def getPoint(self, other_country):
+        total_num = 0
+        for key in other_country.troop_list:
+            total_num += other_country.troop_list[key][0]
+        if total_num > 10:
+            return int(self.health+self.attack+100)
+        else:
+            return int(self.health + self.attack)
+    def isMercenary(self):
+        return True
+class WarElephant(Troops):
+    cost = 70
+    def __init__(self):
+        super().__init__(120,50,70)
+        self.name = "WarElephant"
+    def getPoint(self, other_country):
+        total_num = 0
+        for key in other_country.troop_list:
+            total_num += other_country.troop_list[key][0]
+        if total_num > 10:
+            return int(self.health+self.attack+100)
+        else:
+            return int(self.health + self.attack)
+    def isMercenary(self):
+        return True
