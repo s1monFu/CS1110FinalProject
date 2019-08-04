@@ -1,11 +1,9 @@
 from Country import country
-from Strategy import strategy
-import Troop
 class player_country(country):
 
     def __init__(self, ID,name):
         super().__init__(ID,name)
-        self.my_strategy = strategy()
+
 
     def attack_countries(self, other_country):
         """This function is used to attack other countries
@@ -35,7 +33,7 @@ class player_country(country):
                         other_country.troop_list[key][1].health -= 15
                     if other_country.troop_list[key][1].attack >=10:
                         other_country.troop_list[key][1].attack -= 10
-        if enemy_point > my_point:
+        if enemy_point >= my_point:
             for key in self.troop_list:
                 if self.troop_list[key][0] > 0:
                     if self.troop_list[key][0] >= 3:
