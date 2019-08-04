@@ -22,6 +22,8 @@ class Rangers(Troops):
         else:
             return int(self.health + self.attack)
 
+    def isMercenary(self):
+        return False
 
 
 '''
@@ -37,6 +39,9 @@ class Swordsman(Troops):
             return int(self.health+self.attack+5)
         else:
             return int(self.health + self.attack)
+
+    def isMercenary(self):
+        return False
 """
 Priest
 """
@@ -48,6 +53,9 @@ class Priest(Troops):
 
     def getPoint(self, other_country):
         return int(self.health + self.attack)
+
+    def isMercenary(self):
+        return False
 
 """
 Spearman
@@ -61,6 +69,9 @@ class Spearman(Troops):
             return int(self.health+self.attack+5)
         else:
             return int(self.health + self.attack)
+
+    def isMercenary(self):
+        return False
 """
 Calvary Raider
 """
@@ -74,6 +85,9 @@ class CalvaryRaider(Troops):
             return int(self.health+self.attack+5)
         else:
             return int(self.health + self.attack)
+
+    def isMercenary(self):
+        return False
 """
 BlackSmith
 """
@@ -84,6 +98,9 @@ class BlackSmith(Troops):
         print("I can add teammates' attack")
     def getPoint(self, other_country):
         return int(self.health + self.attack)
+
+    def isMercenary(self):
+        return False
 """
 Ballista
 """
@@ -96,6 +113,9 @@ class Ballsita(Troops):
             return int(self.health+self.attack+20)
         else:
             return int(self.health + self.attack)
+
+    def isMercenary(self):
+        return False
 """
 Dragon
 """
@@ -110,3 +130,6 @@ class Dragon(Troops):
             return int(self.health+self.attack+100)
         else:
             return int(self.health + self.attack)
+
+    def isMercenary(self):
+        return False
