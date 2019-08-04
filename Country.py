@@ -7,11 +7,14 @@ class country:
         self.name = name
         self.ID = ID
         self.level = 1
-        self.troop_list = {'Ranger': [0,Troop.Rangers()], 'Swordsman': [0, Troop.Swordsman()], 'Priest': [0,Troop.Priest()],
-                           'Spearman': [0,Troop.Spearman()], 'CalvaryRaider': [0,Troop.Spearman()], 'BlackSmith': [0,Troop.BlackSmith()],
-                           'Ballista': [0,Troop.Ballsita()], 'Dragon': [0, Troop.Dragon()], 'CrossbowMan': [0, Troop.CrossbowMan()], 'WarElephant': [0,Troop.WarElephant()]}
+        self.troop_list = {'Ranger': [0, Troop.Rangers()], 'Swordsman': [0, Troop.Swordsman()],
+                           'Priest': [0, Troop.Priest()],
+                           'Spearman': [0, Troop.Spearman()], 'CalvaryRaider': [0, Troop.Spearman()],
+                           'BlackSmith': [0, Troop.BlackSmith()],
+                           'Ballista': [0, Troop.Ballsita()], 'Dragon': [0, Troop.Dragon()],
+                           'CrossbowMan': [0, Troop.CrossbowMan()], 'WarElephant': [0, Troop.WarElephant()]}
         self.max_troop = 5
-        self.num_gold = 20
+        self.num_gold = 20000
         self.gold_per_day = 10
         self.adjacent_countries = []
         # Technology Tree
