@@ -660,3 +660,10 @@ class MainShop:
 
 myshop = MainShop('shop')
 myshop.showShop(Player)
+
+    def encounterenemy(self):
+        rand_num = random.randint(0,10)
+        if rand_num < 3:
+            self.showBScreen(AI_country.AI_country1)
+        elif rand_num > 8:
+            self.showBScreen(AI_country.AI_country2)
