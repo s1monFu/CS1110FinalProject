@@ -537,27 +537,31 @@ class MainShop:
         MainShop.delete(self.canva)
         myshop.mainScreen(self)
 
-    def updatePower(self,name: Canvas, thecountry):
+    def updatePower(self, name: Canvas, thecountry):
         self.name = name
         self.name.after(200, self.changeTextPowerSelf(thecountry))
-        self.name.after(0, self.changeTextPowerEne(thecountry))
-    def changeTextPowerSelf(self, thecountry):
+
+
+    def changeTextPowerSelf(self,thecountry):
         label222 = Label(text=str(Player.get_total_cp(Player.troop_list, thecountry)), width=40)
         label222.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
                            fg="white")
         label222_window = self.canva.create_window(10, 150, anchor=NW, window=label222)
-    def changeTextPowerEne(self, thecountry):
+
         label2234 = Label(text=str(thecountry.get_total_cp(thecountry.troop_list, Player)), width=40)
         label2234.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
                             fg="white")
         label2234_window = self.canva.create_window(550, 150, anchor=NW, window=label2234)
-    def attack(self,thecountry):
+
+
+    def attack(self, thecountry):
         Player.attack_countries(thecountry)
-        self.updatePower(self.canva, thecountry)
+
 
 
 
     def showBScreen(self, country):
+
 
         roundnum = 0
 
@@ -580,11 +584,10 @@ class MainShop:
         label2234.configure(width=15, activebackground="brown", relief=FLAT, font=("Courier", 15), bg="brown",
                             fg="white")
         label2234_window = self.canva.create_window(550, 150, anchor=NW, window=label2234)
-        if country.get_total_cp(country.troop_list, Player)>= Player.get_total_cp(Player.troop_list, country):
-            print("You lose")
-        else:
-            print("You won")
-        button4 = Button(root, text="Start to attack",command=self.attack(country), font=("Courier", 25))
+        """
+        Attack
+        """
+        button4 = Button(root, text="Start to attack",command=lambda:[self.attack(country),self.updatePower(self.canva,country)], font=("Courier", 25))
         button4.configure(width=20, activebackground="#33B5E5", relief=FLAT)
         button4_window = self.canva.create_window(140, 400, anchor=NW, window=button4)
 
