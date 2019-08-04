@@ -1,6 +1,7 @@
 import Troop
-class country:
 
+class country:
+    """Country is used """
     def __init__(self, ID,name = ''):
         self.name = name
         self.ID = ID
@@ -47,7 +48,6 @@ class country:
         for key in self.troop_list:
             total += self.troop_list[key][0]
         return total
-
 
 
 
