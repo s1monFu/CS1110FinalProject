@@ -1,5 +1,5 @@
 import Troop
-
+import Mercenary
 class country:
     """Country is used """
     def __init__(self, ID,name = ''):
