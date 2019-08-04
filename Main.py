@@ -7,7 +7,7 @@ import Troop
 import time
 from threading import Thread
 import Map
-from Strategy import strategy
+#from Strategy import strategy
 """
 Random Attack
 """
@@ -18,10 +18,10 @@ Random Attack
 Preset
 """
 
-AI_country1 = country(0)
-AI_country1.add_troop(10, 'Rangers')
-AI_country2 = country(1)
-AI_country2.add_troop(10, 'Swordsman')
+AI_countrya = country(0)
+AI_countrya.add_troop(10, 'Rangers')
+AI_countryb = country(1)
+AI_countryb.add_troop(10, 'Swordsman')
 
 Player = player_country( 2, 'Kindom')
 Player.add_troop(10,'Ranger')
@@ -40,5 +40,4 @@ main_map = Map.map()
 shop.showShop(Player)
 shop = Map.MainShop('Big shop')
 """
-Player.attack_countries(AI_country1)
 
